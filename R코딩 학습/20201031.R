@@ -2,10 +2,6 @@ library(httr)
 library(rvest)
 library(readr)
 
-<<<<<<< HEAD
-=======
-swhoememe
->>>>>>> 1972984bd6ff409d7b0ff267037d38c66208177d
 gen_otp_url =
   'http://marketdata.krx.co.kr/contents/COM/GenerateOTP.jspx'
 gen_otp_data = list(
@@ -150,54 +146,3 @@ value_index <- data_fs[match(value_type, rownames(data_fs)), ncol(data_fs)]
 ncol(data_fs)
 
 data_fs[1,2]
-
-
-print(value_index)
-
-library(readr)
-
-url = 'http://comp.fnguide.com/SVO2/ASP/SVD_main.asp?pGB=1&gicode=A005930'
-data = GET(url,
-           user_agent('Mozilla/5.0 (Windows NT 10.0; Win64; x64)
-                      AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'))
-
-price = read_html(data) %>%
-  html_node(xpath = '//*[@id="svdMainChartTxt11"]') %>%
-  html_text() %>%
-  parse_number()
-
-print(price)
-
-
-share = read_html(data) %>%
-  html_node(
-    xpath =
-      '//*[@id="svdMainGrid1"]/table/tbody/tr[7]/td[1]') %>%
-  html_text()
-
-print(share)
-
-share <- share %>% strsplit('/') %>% unlist() %>% .[1] %>% parse_number()
-print(share)
-as.numeric(share)
-is.numeric(share)
-
-
-data_value <- price/(value_index/share*100000000)
-names(data_value) <- c('PER', 'PBR', 'PCR', 'PSR')
-data_value[data_value < 0] = NA
-print(data_value)
-
-
-
-KOR_ticker <- read.csv('KOR_ticker.csv', row.names = 1)
-KOR_ticker$종목코드 <- str_pad(KOR_ticker$종목코드, 6, side = c('left'), pad = '0')
-
-
-name <- KOR_ticker$'종목코드'[i]
-
-
-nrow(KOR_ticker)
-for(i in 1:nrow(KOR_ticker)) {
-  name <- KOR_ticker$종목코드[i]
-}
