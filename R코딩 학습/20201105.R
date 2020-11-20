@@ -2,10 +2,6 @@ library(httr)
 library(rvest)
 library(readr)
 
-<<<<<<< HEAD
-=======
-swhoememe
->>>>>>> 1972984bd6ff409d7b0ff267037d38c66208177d
 gen_otp_url =
   'http://marketdata.krx.co.kr/contents/COM/GenerateOTP.jspx'
 gen_otp_data = list(
