@@ -30,3 +30,4 @@ ggplot(ret, aes(rm, ri)) +
   geom_abline(lty=2) +
   geom_smooth(method='lm', se=F, color='red')
 
+####수정###
