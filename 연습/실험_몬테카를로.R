@@ -20,5 +20,3 @@ tibble(
   scale_color_manual(values=c('#cdcdcd', '#79c3d6')) +
   coord_equal() +
   guides(color=FALSE)
-
-?as_factor
