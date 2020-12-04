@@ -10,7 +10,7 @@ fun(1,2)
 
 for(i in 1:20) {
   if (i%%2 == 0) {
-    print(i+1000)
+    print(i+10)
   } else {
     print(i)
   }
