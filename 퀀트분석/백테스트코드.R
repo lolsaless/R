@@ -1,4 +1,4 @@
-setwd("~/Rcoding")
+
 # 포트폴리오 파일 읽어오기 -----
 if(!require(stringr)){
   install.packages('stringr')
