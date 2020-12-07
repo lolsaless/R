@@ -32,15 +32,24 @@ while(i <= 10) {
 
 
 for_list <- list()
-
-
-
-for(i in 1:4) {
-  for(ii in 5:6) {
-    
-     
-  }
-  for_list[[i]] <- (ii)
+for(i in 1:20) {
+  for_list[[i]]
 }
 
+print(for_list)
+
+
+price_list <- list()
+for (i in 1:20) {
+  price_list[[i]] <- 2
+}
+price_list <- do.call(cbind, price_list)
+
+
+for_list = list()
+for (i in 1:4) {
+  for (ii in 1) {
+    for_list[[i]] = i+ii
+  }
+}
 print(for_list)
