@@ -12,8 +12,8 @@ body_year <- as.character(c(2015:2019))
 body_brtcCode <- as.character(c(1:17))
 #지역구분 코드표
 for_code = data.frame(num = c(1:17),
-                   city = c('서울', '부산', '대구', '인천','광주', '대전', '울산', '경기','강원', '충북','충남', '전북',
-                         '전남', '경북','경남', '제주', '세종'))
+                   city = c('서울', '부산', '대구', '인천','광주', '대전', '울산', '경기','강원', '충북','충남', '전북', '전남', '경북','경남', '제주', '세종'))
+
 for (b_y in body_year) {
   years = b_y
   for (b_c in body_brtcCode) {
