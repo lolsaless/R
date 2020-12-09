@@ -12,7 +12,7 @@ year <- as.character(c(2015:2019))
 code <- as.character(c(1:17))
 #지역구분 코드표
 df.code = data.frame(num = c(1:17),
-                   city = c('서울', '부산', '대구', '인천','광주', '대전', '울산', '경기','강원', '충북','충남', '전북', '전남', '경북','경남', '제주', '세종'))
+                     city = c('서울', '부산', '대구', '인천','광주', '대전', '울산', '경기','강원', '충북','충남', '전북', '전남', '경북','경남', '제주', '세종'))
 
 for (i in year) {
   for (ii in code) {
@@ -23,9 +23,9 @@ for (i in year) {
     
     data_tms <- data_tms %>% content(as='text') %>% fromJSON() %>% do.call(rbind,.)
     
-      for (iii in df.code$num) {
-        if (ii == iii){
-          write.csv(data_tms, paste0(i,'_', df.code$city[[iii]],'.csv'))
+    for (iii in df.code$num) {
+      if (ii == iii){
+        write.csv(data_tms, paste0(i,'_', df.code$city[[iii]],'.csv'))
       }
     }
   }
@@ -34,27 +34,10 @@ for (i in year) {
 
 #tms자료를 취합하기위한 빈 리스트 생성
 #i번째 행에다 하니까 데이터가 신규 데이터로 덮어쓰기가 되어 정상적으로 불러와지지 않는다.
-tms_list = list()
-
-for (i in 1:nrow(for_code)) {
-  tryCatch({
-    name = for_code[i, 'city']
-    for(ii in body_year) {
-      yy = ii
-      
-      tms_list[[i]] =
-        read.csv(paste0(yy,'_',name,'.csv'))
-    }
-  }, error = function(e) {
-    print(paste('Error:', i))
-  })
+tms_len <- length(list.files('data_tms/'))
+tms_list <- list.files('data_tms/')
+tms_data <- data.frame()
+for (i in 1:tms_len) {
+  temp <- read.csv(paste0('data_tms/', tms_list[i]))
+  tms_data <- rbind(tms_data, temp)
 }
-
-tms_list2 = do.call(rbind, tms_list)
-
-
-
-for (i in body_year) {
-  print(paste0(i,body_brtcCode))
-}
-##for문 조건 한 번만 넣어도 해결 될 듯.
