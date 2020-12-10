@@ -1,4 +1,6 @@
 #작업공간 우선 지정
+setwd('D:\\')
+ifelse(dir.exists('r_data'), FALSE, dir.create('r_data'))
 setwd('D:\\r_data')
 
 #데이터 크롤링을 위한 필수 라이브러리 설치
@@ -26,7 +28,7 @@ df.code = data.frame(num = c(1:17),
 # 1cycle = 2015 1, 2015 2..... 2015 17
 # 2cycle = 2016 1, 2016 2..... 2016 17
 # 최종 2019 17까지 반복을 하게 된다.
-
+ifelse(dir.exists('data_tms'), FALSE, dir.create('data_tms'))
 for (i in year) {
     for (ii in code) {
         data_tms <- POST(url_tms,
