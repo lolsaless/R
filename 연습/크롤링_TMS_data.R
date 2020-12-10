@@ -40,7 +40,7 @@ for (i in year) {
         
         for (iii in df.code$num) {
             if (ii == iii){
-                write.csv(data_tms, paste0(i,'_', df.code$city[[iii]],'.csv'))
+                write.csv(data_tms, paste0('data_tms/', i, '_', df.code$city[[iii]],'.csv'))
             }
         }
     }
