@@ -39,11 +39,27 @@ for (i in 1:page_number) {
   Sys.sleep(1)  
 }
 
-a <- unlist(theme_list)
-a
-b <- unlist(ticker_list)
-b
-c <- c(a, b)
-print(c)
+Name <- unlist(theme_list)
+URL <- unlist(ticker_list)
 
-c <- data.frame(a,b)
+Theme <- c(Name, URL)
+print(Theme)
+
+Theme <- data.frame(Name, URL)
+
+Theme <- Theme[Theme$Name!='테마명', ]
+
+rownames(Theme) <- NULL
+
+a = Theme
+
+for (i in Theme[,2]) {
+  theme_url = paste0('https://finance.naver.com', Theme[,2])
+  
+}
+
+for (i in a[,3]) {
+  print(i)
+}
+
+b = a[,c(1,3)]
