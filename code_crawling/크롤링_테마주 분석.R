@@ -47,3 +47,7 @@ c <- c(a, b)
 print(c)
 
 c <- data.frame(a,b)
+
+c <- c[c$a!='테마명', ]
+
+rownames(c) <- NULL
