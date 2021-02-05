@@ -39,6 +39,7 @@ for (i in 1:page_number) {
   Sys.sleep(1)  
 }
 
+
 Name <- unlist(theme_list)
 URL <- unlist(ticker_list)
 
@@ -55,11 +56,22 @@ a = Theme
 
 for (i in Theme[,2]) {
   theme_url = paste0('https://finance.naver.com', Theme[,2])
+  print(theme_url)
   
 }
 
-for (i in a[,3]) {
-  print(i)
-}
 
-b = a[,c(1,3)]
+url <- 'https://finance.naver.com/sise/sise_group_detail.nhn?type=theme&no=4'
+data <- read_html(url, encoding = 'EUC-KR') %>%
+  html_nodes(.,'.name_area') %>%
+  html_nodes(., 'a') %>%
+  html_attr(., 'href')
+
+dats <- read_html(url, encoding = 'EUC-KR') %>%
+  html_nodes(.,'.name_area') %>%
+  html_nodes(., 'a') %>%
+  html_text()
+
+a = strsplit(data, '=')
+a[[1]][2]
+l
