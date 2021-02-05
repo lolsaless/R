@@ -74,4 +74,5 @@ dats <- read_html(url, encoding = 'EUC-KR') %>%
 
 a = strsplit(data, '=')
 a[[1]][2]
-l
+
+1
