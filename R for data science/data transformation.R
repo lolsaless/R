@@ -14,7 +14,7 @@ delay_4 <- filter(flights, arr_delay <= 120 & dep_delay <= 120)
 
 flights %>% select(carrier) %>% table()
 
-#두시간 이상 도착 지연
+#연습문제
 Q1a <- filter(flights, dep_delay >= 120)
 Q1b <- filter(flights, dest %in% c('IAH', 'HOU'))
 Q1c <- filter(flights, carrier %in% c('UA', 'AA', 'DL'))
@@ -29,3 +29,66 @@ summary(flights)
 NA | TRUE
 NA ^0
 NA^10
+
+
+df <- tibble(x = c(5,2,NA))
+arrange(df, x)
+dfs <- data.frame(x = c(5,2,NA))
+
+flights %>% arrange(desc(is.na(dep_time)))
+flights %>% arrange(desc(dep_delay)) %>% head(5)
+
+
+#select
+
+flights %>% select(-c(year:day)) %>% head(5)
+flights %>% select(!starts_with('y')) %>% head(5)
+?select                   
+flights
+flights %>% rename(tail_num = tailnum)
+flights %>% select(time_hour, air_time, everything())
+flights %>% select(starts_with(c('dep', 'arr')))
+
+
+#mutate
+flights_sm1 <- flights %>% select(year:day,
+                                  ends_with("delay"),
+                                  distance,
+                                  air_time)
+flights_sm1 <- flights_sm1 %>% mutate(gain = arr_delay - dep_delay,
+                                      speed = distance/air_time * 60)
+flights_sm1
+
+transmute(flights,
+          gain = arr_delay - dep_delay,
+          hours = air_time/60,
+          gain_per_hour = gain/hours)
+
+y <- c(1,2,2,3,4)
+min_rank(y)
+min_rank(desc(y))
+
+a <- flights %>% select(air_time, arr_time, dep_time)
+aa <- a %>% mutate(time = arr_time - dep_time)
+aa %>% select(time, everything())
+
+dep <- flights %>% select(contains('dep'))
+
+flights %>% mutate(time = time2mins(dep_time)) %>% arrange(desc(time))
+
+
+time2mins <- function(x) {
+  (x %/% 100 * 60 + x %% 100) %% 1440
+}
+
+
+1:3 + 1:10
+
+summarize(flights, aaa = mean(dep_delay, na.rm = TRUE))
+flights %>% group_by(month) %>% summarise(a = mean(dep_delay, na.rm = TRUE))
+
+flights
+flights %>% group_by(dest) %>% summarise(count = n(),
+                                         dist = mean(distance, na.rm = T),
+                                         delay = mean(arr_delay, na.rm = T)) %>% 
+  filter(count > 20, dest != 'HNL')
