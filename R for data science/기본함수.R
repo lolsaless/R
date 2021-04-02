@@ -119,3 +119,55 @@ min(abs(x-5))
 max(abs(x-5))
 
 rm(list=ls())
+
+
+for (i in 1:10) {
+  assign(paste("x", i, sep = ""),i)
+}
+x1
+x2
+
+for(i in seq(10)){
+  
+  assign(paste0('제',i,'회', sep = ""),i)
+  
+}
+
+x9
+
+example(cat)
+example(matrix)
+ls.str()
+rm(list = ls())
+example(rm)
+rm()
+
+gl(3,3,10)
+
+x <- c(1:12)
+x
+X <- matrix(x, 3,4)
+X
+a <- matrix(1:20, 5,5)
+
+b <- matrix(40:59, 5,5)
+b
+rbind(a,b)
+cbind(a,b)
+
+a[1,]
+rbind(a[1,])
+cbind(a[1,])
+det(a)
+det(X)
+X
+norm(X)
+diag(X)
+
+mpg
+library(ggplot2)
+mpg
+mpg['model']
+mpg[['model']]
+mpg[['model']]
+mpg['model']
