@@ -91,4 +91,70 @@ flights
 flights %>% group_by(dest) %>% summarise(count = n(),
                                          dist = mean(distance, na.rm = T),
                                          delay = mean(arr_delay, na.rm = T)) %>% 
-  filter(count > 20, dest != 'HNL')
+filter(count > 20, dest != 'HNL')
+
+
+a <- matrix(1:20, nrow = 5)
+colnames(a) <- c(111,222,333,444)
+a
+rownames(a) <- c(111,222,333,444,555)
+a
+
+
+not_cancelled <- flights %>% 
+  filter(!is.na(dep_delay), !is.na(arr_delay))
+not_cancelled %>% 
+  group_by(year, month, day) %>% 
+  summarise(mean_dep = mean(dep_delay),
+            mean_arr = mean(arr_delay))
+
+delays <- not_cancelled %>% 
+  group_by(tailnum) %>% 
+  summarise(delay = mean(arr_delay))
+
+ggplot(delays, aes(x = delay)) +
+  geom_freqpoly(binwidht = 10)
+
+delays2 <- not_cancelled %>% 
+  group_by(tailnum) %>% 
+  summarise(delay_minute = mean(arr_delay),
+            count = n())
+ggplot(delays2, aes(x=count, y=delay_minute)) +
+  geom_point(alpha = 1/10)
+
+
+delays2 %>% 
+  filter(count > 300) %>% 
+  ggplot(aes(x=count, y=delay_minute)) +
+  geom_point(alpha = 1/10)
+
+delays2 %>% arrange(desc(count))
+
+a <- not_cancelled %>% 
+  group_by(year, month, day) %>% 
+  mutate(r = min_rank(desc(dep_time))) %>% 
+  filter(r %in% range(r)) %>% 
+  select(year, month, day, r)
+rr <- a$r
+range(rr)
+c <- c(5:100)
+range(c)
+
+
+not_cancelled %>% 
+  count(tailnum, wt = distance) %>% 
+  arrange(desc(n))
+
+
+daily <- flights %>% group_by(year, month, day)
+per_day <- summarise(daily, flights=n())
+per_day
+summarise(daily, flights=n())
+per_month <- summarise(per_day, flights = sum(flights))
+per_month
+
+flights %>% group_by(year, month) %>% summarise(count = n())
+
+daily %>% 
+  ungroup() %>% 
+  summarise(flight = n())
