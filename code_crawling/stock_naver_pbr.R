@@ -67,3 +67,14 @@ a$ROE <- as.numeric(a$ROE)
 
 a$현재가 <- parse_number(a$현재가)
 stock_data <- data.frame(price = a$현재가, PER = a$PER, ROE = a$ROE)
+
+stock <- data.frame(name = a$종목명, price = a$현재가, listed_stock = a$상장주식수, PER = a$PER, ROE = a$ROE)
+stock$listed_stock <- parse_number(stock$listed_stock)
+
+stock <- stock %>% mutate(PBR = ROE/100*PER)
+stock <- na.omit(stock)
+
+rownames(stock) <- NULL
+
+ROE15 <- stock %>% filter(ROE >= 15 & price <= 50000 & PBR <= 2 & listed_stock <= 50000)
+head(ROE15)
