@@ -75,4 +75,4 @@ for (i in 0:1) {
 data_table = do.call(rbind, data)
 data_table <- data_table[,2:ncol(data_table)]
 
-wrir
+write.csv(data_table, 'data.csv')
