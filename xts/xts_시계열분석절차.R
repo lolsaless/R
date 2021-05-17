@@ -65,3 +65,9 @@ PP.test(bond_dif.ts)
 library(tseries)
 adf.test(econonmic.ts[,2], k=3)
 ?adf.test
+
+
+samsung.df <- read.csv("005930.KS.csv")
+
+head(samsung.df)
+str(samsung.df)
