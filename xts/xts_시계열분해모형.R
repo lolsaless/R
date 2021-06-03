@@ -49,3 +49,6 @@ oil_naive = naive(oil_seasadj)
 #naive모형의 예측값은 자료의 평균이다. 따라서 예측값이 일직선으로 나타난다.
 par(mfrow = c(1,1))
 plot(oil_naive, ylab = "oil.ts", main = "seasonally adjusted naive() forecast")
+
+
+

@@ -73,13 +73,13 @@ b <- ts(a$oil_user_enter.ts, start = c(1994,1), frequency = 12)
 b
 
 #경제시계열 자료, bond_3_year = 국고채 3년 수익률
-economic.df <- read.csv("BOK_macro_economic_rate.csv")
+economic.df <- read.csv("data_xts/BOK_macro_economic_rate.csv")
 economic.df
 
 str(economic.df)
 economic.df[-2]
 
-economic.ts <- ts(economic.df[-1], start = c(2010,1), frequency = 12)
+economic.ts <- ts(economic.df[-1], start = c(2010,1), frequency = 12)6
 economic.ts[,1]
 str(economic.ts)
 #ts에서는 $열이름 으로 선택할 수 없다.

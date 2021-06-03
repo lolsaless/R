@@ -46,3 +46,17 @@ lines(oil_holt_fit1$mean, col = "red", type = "o")
 lines(oil_holt_fit2$mean, col = "blue", type = "o")
 legend("topleft", lty = 1, col = c(1,"red","blue"), c("data", expression(fit1:linter),
                                                       expression(fit2:damped)), pch = 1)
+#계정평활모형
+oil_hw_fit1 <- hw(oil.ts, seasonal = "additive", h = 12)
+oil_hw_fit2 <- hw(oil.ts, seasonal = "multiplicative", h = 12)
+oil_hw_fit2$model
+
+cbind(oil_hw_fit1$mean, oil_hw_fit2$mean)
+plot(oil_hw_fit1$mean)
+plot(oil_hw_fit2$mean)
+plot(oil_hw_fit1)
+plot(oil.ts)
+
+plot(oil_hw_fit1, ylab = "oil", xlab = "year", main = "Forecasts from Holt-winters")
+lines(oil_hw_fit1$mean, col = "red")
+lines(oil_hw_fit2$mean, col = "blue")
