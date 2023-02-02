@@ -54,4 +54,46 @@ head(mpg,1)[1]
 head(mpg,3)[2:4]
 head(mpg,3)[2:4][1]
 
+is.data.frame(mpg)
+
+mpg
+print(mpg, n= 20)
+
+x <- mpg$manufacturer
+y <- mpg$model
+z <- mpg$hwy
+
+thempg <- data.frame(x, y, z)
+thempg <- data.frame("제조사" = x, 모델 = y, 연비 = z)
+head(mpg)
+head(thempg)
+view(thempg)
+
+dim(thempg)
+names(thempg)
+names(thempg)[3]
+row.names(thempg)
+
+class(thempg)
+is.data.frame(thempg)
+
+class(thempg$연비)
+class(thempg$제조사)
+class(thempg$모델)
+
+is.integer(thempg$연비)
+is.integer(thempg[,3])
+
+thempg[3, 2:3]
+thempg[3]
+thempg
+
+head(thempg)
+
+thempg[3,3]
+thempg[3,2:3]
+thempg[1,1]
+thempg[1,6]
+thempg[6,1:3]
+thempg[1:2,2:3]
 
