@@ -23,6 +23,10 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, color = "blue"))
 
 ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = "red"))
+
+
+ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy), color = "red")
 
 
@@ -32,4 +36,85 @@ ggplot(data = mpg) +
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, alpha = class))
 ggplot(data = mpg) +
-  geom_point(mapping = aes(x = displ, y = hwy, shape = class))
+  geom_point(mapping = aes(x = displ, y = hwy, shape = drv))
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, color = drv))
+
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ cyl)
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+ggplot(data = mpg) +
+  geom_line(mapping = aes(x = displ, y = hwy))
+
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv, color = drv))
+
+ggplot(data = mpg) +
+  geom_line(mapping = aes(x = displ, y = hwy, linetype = drv, color = drv))
+
+ggplot(mpg) +
+  geom_smooth(aes(displ, hwy))
+ggplot(mpg) +
+  geom_smooth(aes(displ, hwy, group = drv))
+ggplot(mpg) +
+  geom_smooth(aes(displ, hwy, color = drv))
+ggplot(mpg) +
+  geom_smooth(aes(displ, hwy, color = drv),
+              show.legend = FALSE)
+
+ggplot(mpg) +
+  geom_point(aes(displ, hwy)) +
+  geom_smooth(aes(displ, hwy, color = drv, linetype = drv),
+              show.legend = FALSE)
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  geom_smooth(aes(color = drv, linetype = drv),
+              show.legend = FALSE)
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(aes(linetype = drv))
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(color = class)) +
+  geom_smooth(data = filter(mpg, class == "subcompact"), se = FALSE)
+
+head(diamonds)
+dim(diamonds)
+
+ggplot(diamonds) +
+  geom_bar(aes(cut))
+unique(diamonds$cut)
+class(diamonds$cut)
+a <- as.vector(diamonds$cut)
+class(a)
+unique(a)
+
+?diamonds
+
+ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity)) + 
+  geom_bar(alpha = 1/5, position = "identity")
+ggplot(data = diamonds, mapping = aes(x = cut, colour = clarity)) + 
+  geom_bar(fill = NA, position = "identity")
+
+ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity)) + 
+  geom_bar(alpha = 1/5, position = "dodge")
+ggplot(data = diamonds, mapping = aes(x = cut, colour = clarity)) + 
+  geom_bar(fill = NA, position = "identity")
+
+ggplot(mpg, aes(class, hwy)) +
+  geom_boxplot() +
+  coord_flip()
+
