@@ -33,4 +33,12 @@ class(tomato5$aftomato)
 tomato6 <- data.frame(x, y, aftomato, stringsAsFactors = FALSE)
 class(tomato6$aftomato)
 
-read_delim()
+library(readr)
+theURL
+Dtomato <- read_delim(file = theURL, delim = ',')
+Dtomato
+
+library(data.table)
+dttomato <- fread(input = theURL, header = TRUE, sep = ",")
+dttomato
+class(dttomato)
