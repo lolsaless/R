@@ -97,3 +97,15 @@ thempg[1,6]
 thempg[6,1:3]
 thempg[1:2,2:3]
 
+thempg[c(1,2),c(1,3)]
+thempg[,3]
+thempg[,2]
+summary(thempg)
+thempg["제조사"]
+class(thempg["제조사"])
+thempg[["제조사"]]
+class(thempg[["제조사"]])
+thempg[,2]
+class(thempg[,2])
+thempg[,2, drop = FALSE]
+class(thempg[,2, drop = FALSE])
