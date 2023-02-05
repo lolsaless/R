@@ -117,4 +117,3 @@ ggplot(data = diamonds, mapping = aes(x = cut, colour = clarity)) +
 ggplot(mpg, aes(class, hwy)) +
   geom_boxplot() +
   coord_flip()
-
