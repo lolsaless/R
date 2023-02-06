@@ -42,3 +42,45 @@ library(data.table)
 dttomato <- fread(input = theURL, header = TRUE, sep = ",")
 dttomato
 class(dttomato)
+
+#6.2엑셀데이터
+library(readxl)
+excel_sheets("ExcelExample.xlsx")
+tomatoXL <- read_excel("ExcelExample.xlsx")
+tomatoXL
+
+colnames(tomatoXL)
+
+unique(tomatoXL$Tomato)
+
+mpg %>% filter(year == 1999) %>%
+  group_by(manufacturer) %>% 
+  summarise(mean_hwy = mean(hwy),
+            mean_displ = mean(displ)) %>% 
+  head(3)
+
+windXL1 <- read_excel("ExcelExample.xlsx", sheet = 2)
+dim(windXL1)
+
+diamonds
+dim(diamonds)
+
+diamonds %>% group_by(cut) %>% 
+  summarise(Prices = mean(price)) %>% 
+  arrange(desc(Prices))
+
+#크롤링
+library(rvest)
+ribalta <- read_html("https://jaredlander.com/data/ribalta.html")
+
+class(ribalta)
+
+ribalta %>% html_nodes('ul') %>% html_nodes('span')
+ribalta %>% html_nodes('.street')
+
+ribalta %>% html_nodes("table.food-items") %>% 
+  magrittr::extract(.,1:4) %>% 
+  html_table()
+
+?extract
+?html_nodes
