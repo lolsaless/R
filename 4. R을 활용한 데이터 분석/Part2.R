@@ -248,4 +248,6 @@ mpg %>% left_join(., fuel, by = "fl") %>%
   summarise(ave_fl = mean(price_fl))
 
 mpg %>% left_join(., fuel, by = "fl") %>% select(model, fl, price_fl) %>% head(5)
-  
+
+mpg %>% filter(class == "compact") %>% 
+  group_by(manufacturer)
