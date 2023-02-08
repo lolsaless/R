@@ -78,10 +78,11 @@ mean(flights$year)
 mean(flights$dep_delay, na.rm = TRUE)
 
 #앞의 !is.na에서 NA값을 제거했기 때문에 뒤에서는 na.rm 이 필요하지 않다.
-flights %>% summarise(aaa = mean(arr_delay, na.rm = TRUE))
-flights %>% filter(!is.na(arr_delay)) %>% 
+a <- flights %>% summarise(delay = mean(arr_delay, na.rm = TRUE))
+b <- flights %>% filter(!is.na(arr_delay)) %>% 
   summarise(delay = mean(arr_delay))
 
+identical(a, b)
 
 delays <- flights %>% filter(!is.na(arr_delay)) %>% 
   group_by(tailnum) %>% 
@@ -93,11 +94,18 @@ delays <- flights %>% filter(!is.na(arr_delay)) %>%
 ggplot(delays, aes(delay)) +
   geom_freqpoly(binwidth = 10)
 
-ggplot(delays, aes(n, delay)) +
+ggplot(delays, aes(delay, n)) +
   geom_point(alpha = 1/10)
 
 delays %>% 
   filter(n > 25) %>% 
   ggplot(aes(n, delay)) +
+  geom_point(alpha = 1/10) +
+  geom_smooth(se = FALSE)
+
+
+delays %>% 
+  filter(n > 25) %>% 
+  ggplot(aes(delay, n)) +
   geom_point(alpha = 1/10) +
   geom_smooth(se = FALSE)
