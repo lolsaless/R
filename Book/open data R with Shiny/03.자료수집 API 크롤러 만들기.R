@@ -9,10 +9,15 @@ dateList <- seq(from = as.Date("2021-01-01"),
                 to = as.Date("2021-12-31"),
                 by = "1 month")
 
-dateList <- format(dateList, format = "%Y%M")
+dateList <- format(dateList, format = "%Y%m")
 service_key <- "BQldryWdzJst6neFJIkd5g4JPySr3dfWfOA35vpPlXpyuJ8afcm7KVDWRO4E58jTGJXiyJVy2fBybwTRAVDDkA%3D%3D"
 url_list <- list()
 cnt <- 0
+
+length(url_list)
+browseURL(paste0(url_list[1]))
+
+
 
 #크롤링 반복문 작성
 for (i in 1:nrow(loc)) {
