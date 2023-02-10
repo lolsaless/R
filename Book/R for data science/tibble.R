@@ -3,6 +3,9 @@ iris
 str(iris)
 head(iris)
 as_tibble(iris)
+#tibble()을 사용하여 개별 벡터로부터 새로운 티블을 만들 수 있다.
+#tibble()은 길이가 1인 입력을 자동으로 재사용하며, 여기에서 보이는 것 처럼 방금 만든 변수를 참소할 수 도 있다.
+
 
 tibble(
   x = 1:5,
@@ -12,18 +15,18 @@ tibble(
 
 library(lubridate)
 
-a <- tibble(
+tibble(
   a = now() + runif(1000) + 86400,
   b = today() + runif(1000) + 30,
   c = 1:1000,
   d = runif(1000),
   e = sample(letters, 1000, replace = T)
 )
+
 letters
 now()
 runif(1000)
 
-a
 nycflights13::flights %>% 
   print(n=10, width = Inf)
 
@@ -32,9 +35,34 @@ df <- tibble(
   y = rnorm(5)
 )
 df
-df[[x]]
+df$x
 df[['x']]
 df[[1]]
+df[,1]
+df[,2]
+df[2]
+df[[2]]
+
+df %>% .$x
+is_tibble(mtcars)
+as_tibble(mtcars)
+var <- "mpg"
+var[[1]]
+
+annoying <- tibble(
+  `1` = 1:10,
+  `2` = `1` * 2 + rnorm(length(`1`))
+)
+annoying$`1`
+annoying[1]
+annoying[[1]]
+annoying %>% plot(1,2)
+annoying$`3` <- tibble(`3` = annoying[2] / annoying[1])
+annoying
+
+annoying %>% mutate(`3` = `2`/`1`)
+
+
 
 parse_double('1.23')
 parse_double('222')
@@ -107,3 +135,4 @@ stock %>% spread(year, return) %>%
 
 stock %>% spread(year, return) %>% 
   gather('year', 'return', `2015`:`2016`)
+
