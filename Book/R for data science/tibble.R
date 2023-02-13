@@ -136,3 +136,26 @@ stock %>% spread(year, return) %>%
 stock %>% spread(year, return) %>% 
   gather('year', 'return', `2015`:`2016`)
 
+# 7.데이터 타이디하게 학기
+table1
+table2
+table3
+table4a
+table4b
+
+table1 %>% mutate(rate = cases / population * 10000)
+table1 %>% count(cases, wt = year)
+?count
+
+table4a %>% gather(`1999`, `2000`, key = "year", value = "cases") %>% 
+  mutate(year = parse_integer(year))
+table4b %>% gather(`1999`, `2000`, key = "year", value = "population")
+
+tidy4a <- table4a %>% gather(`1999`, `2000`, key = "year", value = "cases") %>% mutate(year = parse_integer(year))
+
+tidy4b <- table4b %>% gather(`1999`, `2000`, key = "year", value = "population") %>% mutate(year = parse_integer(year))
+
+left_join(tidy4a, tidy4b)
+
+str(tidy4a)
+str(tidy4b)
