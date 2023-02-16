@@ -88,3 +88,23 @@ nycflights13::flights %>%
 cancelled_flights <- nycflights13::flights
 
 cancelled_flights %>% count(dep_time, NA) %>% tail(5)
+
+#공변동
+ggplot(diamonds, aes(price)) +
+  geom_freqpoly(aes(color = cut), binwidth = 500)
+
+ggplot(diamonds, aes(price, ..density..)) +
+  geom_freqpoly(aes(color = cut), binwidth = 500)
+
+ggplot(diamonds, aes(price, after_stat(density))) +
+  geom_freqpoly(aes(color = cut), binwidth = 500)
+
+ggplot(diamonds, aes(cut, price)) +
+  geom_boxplot()
+
+mpg
+ggplot(mpg) +
+  geom_boxplot(aes(x = reorder(class, hwy, FUN = median), hwy))
+
+ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(x = reorder(class, hwy, FUN = median), y = hwy))
