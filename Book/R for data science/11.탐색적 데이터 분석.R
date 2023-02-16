@@ -60,3 +60,31 @@ unusual <- diamonds %>%
 unusual
 
 #결측값
+diamonds2 <- diamonds %>% 
+  filter(between(y, 3, 20))
+diamonds2 %>% select(price, x, y, z) %>% 
+  arrange(y)
+
+diamonds3 <- diamonds %>% 
+  mutate(y = ifelse(
+    y < 3 | y > 20, NA, y)
+  )
+?case_when
+
+ggplot(diamonds3, aes(x, y)) +
+  geom_point(na.rm = TRUE)
+
+nycflights13::flights %>% 
+  mutate(
+    cancelled = is.na(dep_time),
+    sched_hour = sched_dep_time %/% 100,
+    sched_min = sched_dep_time %% 100,
+    sched_dep_time = sched_hour + sched_min / 60
+  ) %>% 
+  ggplot(aes(sched_dep_time)) +
+  geom_freqpoly(aes(color = cancelled), binwidth = 1/4)
+
+
+cancelled_flights <- nycflights13::flights
+
+cancelled_flights %>% count(dep_time, NA) %>% tail(5)
