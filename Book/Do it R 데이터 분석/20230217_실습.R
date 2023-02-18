@@ -146,3 +146,4 @@ a_mpg
 a_mpg %>% filter(!is.na(hwy)) %>% 
   group_by(drv) %>% 
   summarise(mean_hwy = mean(hwy))
+
