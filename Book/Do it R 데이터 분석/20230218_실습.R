@@ -26,10 +26,10 @@ boxplot(mpg$hwy)$stats
 table(is.na(mpg$hwy))
 df_mpg <- mpg
 
-df_mpg$hwy <- ifelse(mpg$hwy < 12 | mpg$hwy >37, NA, mpg$hwy)
+df_mpg$hwy <- ifelse(mpg$hwy < 12 | mpg$hwy > 37, NA, mpg$hwy)
 
 table(is.na(df_mpg$hwy))
-
+ 
 df_mpg %>% group_by(drv) %>% 
   summarise(mean_hwy = mean(hwy, na.rm = TRUE))
 
@@ -56,6 +56,9 @@ df_mpg %>% filter(cty == "NA")
 
 df_mpg %>% filter(!is.na(drv) & !is.na(cty)) %>% 
   group_by(drv) %>% 
-  summarise(mean_cty = mean(cty, na.rm = TRUE))
+  summarise(mean_cty = mean(cty))
 
-#산점도 변수 간 관계 표현하기
+df_mpg %>%
+  group_by(drv) %>% 
+  summarise(mean_cty = mean(cty, na.rm = TRUE)) %>% 
+  filter(!is.na(drv))

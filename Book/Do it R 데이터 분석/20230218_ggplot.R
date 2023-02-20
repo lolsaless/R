@@ -10,7 +10,7 @@ ggplot(midwest, aes(poptotal, popasian)) +
 
 #막대 그래프 집단 간 차이 표현하기
 
-ggplot(mpg, aes(reorder(drv, hwy), hwy)) +
+ggplot(mpg, aes(reorder(drv, -hwy), hwy)) +
   geom_col()
 
 df_mpg <- mpg %>% group_by(drv) %>% 
@@ -37,10 +37,10 @@ df_class_mpg <- mpg %>% group_by(class) %>%
   summarise(cnt = n())
 
 ggplot(df_class_mpg, aes(reorder(class, -cnt), cnt)) +
-  geom_bar(stat = "identity")
+  geom_col()
 
 ggplot(df_class_mpg, aes(reorder(class, -cnt), cnt)) +
-  geom_col()
+  geom_bar(stat = "identity")
 
 ggplot(df_class_mpg, aes(reorder(class, -cnt), cnt)) +
   geom_bar()
