@@ -11,12 +11,10 @@ c <- c(1L, 2L, 3L, 4L)
 
 b + c
 
-
 class(b + c)
 
 seq(2,3,1, length.out = 19)
 seq(1,3,1, length = 19)
-
 
 c <- c("hello", "world")
 d <- c(FALSE, TRUE)
@@ -32,3 +30,5 @@ class(f[1])
 7 %% 2
 
 #리스트
+
+print(paste0("a", "b"))
