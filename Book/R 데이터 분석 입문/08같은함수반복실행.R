@@ -42,3 +42,25 @@ sapply(univ, FUN = function(i) {
 #univ의 각 원소(열벡터)별로 스칼라인 result가 반환되므로 최종결과는 스칼라를 모은 벡터로 반환된다.
 #sapply()함수가 반환봗은 벡터를 출력한다.
 
+
+getGrade <- function(score) {
+  if(score >= 90) {
+    grade <- "A"
+  } else if(score >= 80) {
+    grade <- "B"
+  } else if(score >= 70) {
+    grade <- "C"
+  } else if(score >= 60) {
+    grade <- "D"
+  } else {
+    grade <- "F"
+  }
+  return(grade)
+}
+
+getGrade(100)
+
+sapply(univ, FUN = function(score) {
+  grade <- sapply(score, FUN = getGrade)
+  return(grade)
+})
