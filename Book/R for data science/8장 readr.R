@@ -1,3 +1,4 @@
+library(tidyverse)
 parse_double("1.23")
 parse_double("1,23", locale = locale(decimal_mark = ","))
 
@@ -23,3 +24,12 @@ x2 <- "\x82\xb1\x82\xf1\x82\xc9\x82\xbf\x82\xcd"
 
 parse_character(x1, locale = locale(encoding = "Latin1"))
 parse_character(x2, locale = locale(encoding = "Shift-JIS"))
+
+charToRaw("こんにちは")
+
+
+guess_encoding(charToRaw(x1))
+guess_encoding(charToRaw(x2))
+
+a <- today()
+parse_date("2010-10-01")
