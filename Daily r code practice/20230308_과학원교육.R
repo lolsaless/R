@@ -69,4 +69,4 @@ view(df_mid)
 table(df_mid$test)
 qplot(df_mid$test)
 
-#문제1
+#
