@@ -4,6 +4,7 @@ library(readxl)
 data_DDG <- read_xlsx("대전광역시_대덕구.xlsx", col_names = TRUE)
 data_DG <- read_xlsx("대전광역시_동구.xlsx", col_names = TRUE)
 identical(colnames(data_DDG), colnames(data_DG))
+
 data_bind <- na.omit(rbind(data_DDG, data_DG))
 table(!is.na(data_bind$`피해운전자 연령`))
 
@@ -11,6 +12,7 @@ colnames(data_bind)
 data_bind %>% group_by(사고내용) %>% 
   summarise(total = sum(경상자수))
 #data_bind %>% count(.$사고내용)
+
 
 data_grade <- data_bind %>% mutate(age = as.numeric(substr(`피해운전자 연령`,1,2)),
                                    age_grade = ifelse(age < 30, 1,
