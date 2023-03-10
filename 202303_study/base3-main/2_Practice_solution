@@ -1,0 +1,48 @@
+library(readxl)
+smokers <- read_excel("smoke.xlsx")
+
+#Q1. smokers에서 자료의 수(레코드의 수)를 구하시오.
+dim(smokers)
+nrow(smokers)
+# 99개
+
+# Q2. smokers 자료의 앞에서 부터 10개의 레코드를 출력하여라.
+smokers %>% head(10)
+# head 함수 이용
+
+# Q3. 자료에서 여자와 남자의 수를 구하시오.
+table(smokers$Gender)
+# 남자 58명, 여자 41명
+
+# Q4. 자료에서 흡연자의 수와 흡연비율을 구하시오.
+table(smokers$Smoker) -> tab1
+tab1
+round(tab1/sum(tab1)*100,1)
+
+# Q5. 자료에서 성별 흡연자의 수와 흡연비율을 구하시오.
+table(smokers$Gender, smokers$Smoker) -> tab2
+tab2
+round(tab2/rowSums(tab2)*100,1)
+
+# Q6. BMI(체질량지수)는 몸무게를 키의 제곱으로 나눈 값이다. 자료에서 BMI를 구하여라.
+smokers %>% 
+  mutate(bmi=Weight/(Height*0.01)^2) -> smokers1
+
+# Q7. 성별 BMI의 평균과 표준편차를 구하라.
+smokers1 %>% 
+  group_by(Gender) %>% 
+  summarise(n=n(), mean=mean(bmi), sd=sd(bmi))
+
+# Q8. 성별 BMI를 상자그림으로 그려라.
+boxplot(bmi~Gender, data=smokers1)
+
+library(ggplot2)
+library(plotly)
+ggplot(data=smokers1, aes(x=Gender, y=bmi, fill=Gender))+
+  geom_boxplot() -> p
+ggplotly(p)
+# 대화형 그림
+
+# Q9. 흡연 및 비흡연자의 BMI의 평균과 표준편차를 구하라.
+# Q10. 흡연 및 비흡연자의 BMI를 상자그림으로 그려라.
+# Gender를 Smoker로 수정
