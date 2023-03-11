@@ -2,7 +2,7 @@
 #https://selenium-release.storage.googleapis.com/index.html selenium 다운로드
 #https://github.com/mozilla/geckodriver/releases geckordriver다운로드
 #https://chromedriver.chromium.org/downloads (크롬드라이버 다운로드)
-#Mac cd /Users/lolsaless/Documents/selenium 폴더이동
+#Mac cd /Users/lolsaless/Documents/GitHub/R_coding/Rselenium/Mac 폴더이동
 #windows cd 후 폴더명 기입
 #ls로 파일명 확인
 #java -Dwebdriver.gecko.driver="geckodriver" -jar selenium-server-standalone-4.0.0-alpha-2.jar -port 4445 터미널에서 실행
@@ -14,7 +14,8 @@ remDr = remoteDriver(remoteServerAddr = "localhost",
                      browserName = "chrome")
 
 remDr$open()
-remDr$navigate("https://naver.com")
+url <- "https://www.foodsafetykorea.go.kr/portal/specialinfo/searchInfoProduct.do?menu_grp=MENU_NEW04&menu_no=2815"
+remDr$navigate(url)
 
 library(rvest)
 library(httr)

@@ -1,0 +1,29 @@
+#JAVA mac x64DMG installer 설치
+#https://selenium-release.storage.googleapis.com/index.html selenium 다운로드
+#https://github.com/mozilla/geckodriver/releases geckordriver다운로드
+#https://chromedriver.chromium.org/downloads (크롬드라이버 다운로드)
+#Mac cd /Users/lolsaless/Documents/GitHub/R_coding/Rselenium/Mac 폴더이동
+#windows cd 후 폴더명 기입
+#ls로 파일명 확인
+#java -Dwebdriver.gecko.driver="geckodriver" -jar selenium-server-standalone-4.0.0-alpha-2.jar -port 4445 터미널에서 실행
+
+library(RSelenium)
+
+remDr = remoteDriver(remoteServerAddr = "localhost",
+                     port = 4445L,
+                     browserName = "chrome")
+
+remDr$open()
+url <- "https://www.foodsafetykorea.go.kr/portal/specialinfo/searchInfoProduct.do?menu_grp=MENU_NEW04&menu_no=2815"
+remDr$navigate(url)
+
+library(rvest)
+library(httr)
+
+search <- remDr$findElement(using = "xpath", value = "/html/body/div[2]/form/div/div[1]/main/section/div[2]/div[1]/div[2]/div/dl/dd[6]/input")
+
+search$setElementAttribute("value", "혼합음료")
+
+search_button <- remDr$findElement(using = "xpath", value = "/html/body/div[2]/form/div/div[1]/main/section/div[2]/div[1]/div[2]/div/span/a")
+search_button$clickElement()
+
