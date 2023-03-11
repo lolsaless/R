@@ -1,8 +1,6 @@
 library(tidyverse)
-library(reprex)
 diet <- read.csv("diet.csv", header = TRUE)
 diet <- na.omit(diet)
-reprex()
 
 diet %>% filter(!is.na(gender))
 
@@ -24,8 +22,8 @@ diet_bmi_grade %>% group_by(gender, grade) %>%
             BMI_sd = sd(BMI))
 
 
-apt <- as_tibble(apt)
-list_apt <- strsplit(apt$시군구, split = " ")
+apt2022 <- as_tibble(apt2022)
+list_apt <- strsplit(apt2022$시군구, split = " ")
 
 for(i in 1:nrow(apt)) {
   apt[i, "시"] = strsplit(apt$시군구[i], split = " ")[[1]][1]
@@ -33,13 +31,13 @@ for(i in 1:nrow(apt)) {
   apt[i, "동"] = strsplit(apt$시군구[i], split = " ")[[1]][3]
 }
 
-apt %>% mutate(si = strsplit(시군구, split = " "))
+apt_name <- as_tibble(apt2022$시군구)
+
+apt_name %>% str_split(., pattern = " ")[[1]][1]
+?str_split
 
 
-
-head(apt)
-
-
+strs
 apt <- apt %>% mutate(year = substr(계약년월, 1, 4),
                       month = substr(계약년월, 5, 6))
 
