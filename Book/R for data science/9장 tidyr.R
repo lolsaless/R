@@ -17,7 +17,7 @@ table1 %>% mutate(rate = cases / population * 10000) %>%
   select(year, country, cases, population, rate)
 
 table1 %>% count(year, wt = cases)
-table1 %>% count(year, wt = cases)
+table1 %>% count(year)
 ?count
 
 table1 %>% group_by(year) %>% 
@@ -87,6 +87,8 @@ table1
 
 #gater와 pivoting
 
+table4a
+
 table4a %>% 
   gather(`1999`, `2000`, key = "year", value = "cases")
 
@@ -121,13 +123,16 @@ stocks %>%
 stocks %>% 
   spread(key = year, value = return) %>% 
   gather(`2015`:`2016`, key = "year", value = "return",
-         convert = list(year = as.numeric)
+         convert = list(year = as.numeric))
 
 ?gather
 ?pivot_longer
 
 table4a %>% 
   pivot_longer(c(1999, 2000), names_to = "year", values_to = "cases")
+
+table4a %>% 
+  pivot_longer(c(`1999`, `2000`), names_to = "year", values_to = "cases")
 
 people <- tribble(
   ~name, ~key, ~value,
@@ -139,3 +144,26 @@ people <- tribble(
   "Jessica Cordero", "height", 156
 )
 people
+
+stocks <- tibble(
+  year   = c(2015, 2015, 2015, 2015, 2016, 2016, 2016),
+  qtr    = c(   1,    2,    3,    4,    2,    3,    4),
+  return = c(1.88, 0.59, 0.35,   NA, 0.92, 0.17, 2.66)
+)
+
+stocks
+
+stocks %>% spread(key = year, value = return)
+stocks %>% complete(year, qtr)
+
+
+treatment <- tribble(
+  ~person,           ~treatment, ~response,
+  "Derrick Whitmore", 1,         7,
+  NA,                 2,         10,
+  NA,                 3,         9,
+  "Katherine Burke",  1,         4
+)
+
+treatment
+treatment %>% fill(person)
