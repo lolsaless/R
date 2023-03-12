@@ -22,11 +22,14 @@ ref_air <- 'https://air.gg.go.kr/default/esData.do?mCode=A010010000'
 
 data_air <- POST(url_air,
                  body = list(op = 'getByLoc',
-                             fromDt = '2020-11-17',
-                             toDt = '2020-11-17',
-                             locCd = '131611',
+                             fromDt = '2023-03-12',
+                             toDt = '2023-03-12',
+                             locCd = '131612',
                              typeCd = '1'),
                  add_headers(referer = ref_air))
 
 data_air <- data_air %>% content(as='text') %>% fromJSON() %>% do.call(rbind,.)
 
+data <- data_air %>% content(as = "text") %>% fromJSON()
+
+data <- as.data.frame(data)
