@@ -167,3 +167,4 @@ treatment <- tribble(
 
 treatment
 treatment %>% fill(person)
+
