@@ -67,7 +67,7 @@ df_title_inf <- title_inf[[3]]
 df_title_inf[1,2]
 
 
-df_list <- data.frame()
+df_list <- c()
 df_list <- list()
 
 library(tidyverse)
@@ -81,7 +81,7 @@ nrow(mpg)
 
 
 for (i in 1:nrow(mpg)) {
-    df_list[i,] = mpg[i,]
+    df_list[i,] = append(mpg[i,])
 }
 
 
