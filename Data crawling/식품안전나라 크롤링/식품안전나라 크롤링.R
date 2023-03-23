@@ -65,3 +65,23 @@ title_inf <- remDr$getPageSource()[[1]] %>% read_html() %>%
 title_inf[[3]]
 df_title_inf <- title_inf[[3]]
 df_title_inf[1,2]
+
+
+df_list <- data.frame()
+df_list <- list()
+
+library(tidyverse)
+
+print(mpg)
+
+mpg
+
+mpg[1,]
+nrow(mpg)
+
+
+for (i in 1:nrow(mpg)) {
+    df_list[i,] = mpg[i,]
+}
+
+
