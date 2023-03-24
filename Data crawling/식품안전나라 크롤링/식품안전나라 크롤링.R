@@ -81,6 +81,7 @@ data.frame("a", "b", "c")
 
 
 
+
 df_table[1,3] <- item_2[2,1]
 df_table[1,4] <- item_2[2,2]
 df_table[1,5] <- item_2[4,1]
