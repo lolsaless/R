@@ -20,107 +20,96 @@ remDr$open()
 url <- "https://www.foodsafetykorea.go.kr/portal/specialinfo/searchInfoProduct.do?menu_grp=MENU_NEW04&menu_no=2815"
 remDr$navigate(url)
 
-#검색
+#Search
 Search_btn <- remDr$findElement(using = "xpath", value = "//*[@id='srchBtn']")
 Search_bar <- remDr$findElement(using = "xpath", value = "//*[@id='prd_cd_nm']")
 Search_bar$setElementAttribute("value", "혼합음료")
 Search_btn$clickElement()
 
-#for 반복문으로 2815#page1 ~ 2815#page612
-for (i in 1:612) {
-    print(paste0(i,"페이지"))
-    for (j in 1:10) {
-        print(paste0(j,"링크 크롤링 중"))
-        Sys.sleep(1)
-    }
-    Sys.sleep(10)
-}
+#select
+click_select1 <- remDr$findElement(using = "xpath", value = '//*[@id="sp_list_cnt"]')
+click_select1$clickElement()
 
-#next page
-click_next <- remDr$findElement(using = "xpath", value = '//*[@id="contents"]/main/section/div[2]/div[3]/div/ul/li[7]/a')
-click_next$clickElement()
+click_select2 <- remDr$findElement(using = "xpath", value = '//*[@id="contents"]/main/section/div[2]/div[2]/div[2]/div[5]/ul/li[5]/a')
+click_select2$clickElement()
 
-#page 정보
-page_html <- remDr$getPageSource()[[1]] %>%
-    read_html() %>% 
-    html_table(fill = TRUE)
 
-df_page_html <- as.data.frame(page_html)
-
-#id 정보
-page_id <- remDr$getPageSource()[[1]] %>% 
+#id 정보 1:123 page 까지, 123번 반복
+id <- remDr$getPageSource()[[1]] %>% 
     read_html() %>% 
     html_nodes('tr') %>% 
     html_nodes(".table_txt") %>% 
     html_nodes("a") %>% 
     html_attr("id")
 
-page_id[1]
-page_id_xpath <- paste0("//*[@id=", page_id[1], "]")
-page_id_xpath
+#id path
+id_xpath <- paste0("//*[@id=", id[1], "]")
+
 
 #id링크 접속, table 정보
-title <- remDr$findElement(using = "xpath", value = page_id_xpath)
-title$clickElement()
-title_inf <- remDr$getPageSource()[[1]] %>% read_html() %>% 
-    html_table(fill = TRUE)
+food_data <- remDr$findElement(using = "xpath", value = id_xpath)
+food_data$clickElement()
+raw_data <- remDr$getPageSource()[[1]] %>% read_html() %>% html_table(fill = TRUE)
 
-title_data_1 <- as.data.frame(title_inf[[2]])
-title_data_2 <- as.data.frame(title_inf[[3]])
-title_data_3 <- as.data.frame(title_inf[[6]])
+#정보 추출
+raw_data[[2]]
+raw_data[[6]]
 
+#정렬
+temp_list <- c(raw_data[[2]], raw_data[[6]])
+temp <- t(unlist(temp_list))
+temp <- as.data.frame(temp)
 
-title_data_3 <- title_data_3[ , -3] 
-title_data_3 <- title_data_3 %>% gather(key = ingredient, value = item)
-title_data_3 %>% spread(ingredient, item)
+#close
+click_close <- remDr$findElement(using = "xpath", value = '//*[@id="close"]')
+click_close$clickElement()
 
-df_table <- c()
-df_table <- title_inf[[2]] %>% select(X2, X4) %>% add_row()
-
-data.frame("a", "b", "c")
-
-
-
-
-df_table[1,3] <- item_2[2,1]
-df_table[1,4] <- item_2[2,2]
-df_table[1,5] <- item_2[4,1]
-
-item_3 <- title_inf[[6]]
-item_3 <- data.frame(item_3)
-a <- item_3[1,2]
-b <- item_3[2,2]
-a
-str(a)
-
-item_3
-
-df_table[1,6] <- a
-df_table[1,7] <- b
-
-df_table <- df_table %>% rename(manufacture = X2,
-                                address = X4,
-                                days = ...3,
-                                name = ...4,
-                                
-                                in1 = ...6,
-                                in2 = ...7)
-
-df_table <- df_table[-2,]
-df_table
-
-
-list_df <- list()
-
-
-mpg
-list_mpg <- list()
-
-nrow(mpg)
-
-for (i in 1:nrow(mpg)) {
-    list_mpg[[i]] <- mpg[i,]
+#for 반복문
+df_temp <- list()
+for (i in 1:length(id)) {
+    id_xpath <- paste0("//*[@id=", id[i], "]")
+    food_data <- remDr$findElement(using = "xpath", value = id_xpath)
+    food_data$clickElement()
+    Sys.sleep(2)
+    raw_data <- remDr$getPageSource()[[1]] %>% read_html() %>% html_table(fill = TRUE)
+    
+    raw_data[[2]]
+    raw_data[[6]]
+    
+    temp_list <- c(raw_data[[2]], raw_data[[6]])
+    temp <- t(unlist(temp_list))
+    temp <- as.data.frame(temp)
+    
+    df_temp[[i]] <- temp
+    
+    click_close <- remDr$findElement(using = "xpath", value = '//*[@id="close"]')
+    click_close$clickElement()
+    
+    Sys.sleep(2)
 }
 
-a <- do.call(rbind, list_mpg)
-a
+a <- do.call(bind_rows, df_temp)
+view(a)
+
+#next page
+click_next <- remDr$findElement(using = "xpath", value = '//*[@id="contents"]/main/section/div[2]/div[3]/div/ul/li[7]/a')
+click_next$clickElement()
+
+
+
+
+c <- bind_rows(df_data3, df_data, df_data2)
+view(c)
+
+c <- bind_rows(c, temp)
+
+a <- list()
+
+a[[1]] <- temp
+
+a[[2]] <- temp
+
+a[[3]] <- df_data3
+
+
+view(do.call(bind_rows, a))
