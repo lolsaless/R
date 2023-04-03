@@ -26,16 +26,6 @@ Search_bar <- remDr$findElement(using = "xpath", value = "//*[@id='prd_cd_nm']")
 Search_bar$setElementAttribute("value", "혼합음료")
 Search_btn$clickElement()
 
-#select
-click_select1 <- remDr$findElement(using = "xpath", value = '//*[@id="sp_list_cnt"]')
-click_select1$clickElement()
-
-click_select2 <- remDr$findElement(using = "xpath", value = '//*[@id="contents"]/main/section/div[2]/div[2]/div[2]/div[5]/ul/li[5]/a')
-click_select2$clickElement()
-
-
-#id 1page에 50개
-
 #for 반복문
 for (page_num in 1:623) {
     

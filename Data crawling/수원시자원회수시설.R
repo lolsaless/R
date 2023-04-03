@@ -1,22 +1,8 @@
 library(httr)
 library(rvest)
-
-url <- 'https://finance.naver.com/news/news_list.nhn?mode=LSS2D&section_id=101&section_id2=258'
-
-data <- GET(url)
-print(data)
-
-data_title <- read_html(data, encoding = 'EUC-KR') %>%
-              html_nodes('dl') %>%
-              html_nodes('.articleSubject') %>%
-              html_nodes('a') %>%
-              html_attr('title')
-print(data_title)
+library(tidyverse)
 
 
-#데이터 다운로드
-###수원시자원회수시설 데이터
-Sys.setlocale('LC_ALL', 'English')
 url <- 'http://www.rrfsuwon.co.kr/_Skin/24_1.php'
 
 data <- POST(url, body = list(
@@ -29,7 +15,9 @@ data <- POST(url, body = list(
 
 data_suwon <- read_html(data) %>% html_table(fill = T) %>% .[[1]]
 
-Sys.setlocale('LC_ALL', 'Korean')
+
+
+data_suwon
 
 data_suwon$일자 <- str_replace_all(data_suwon$일자, '\\.', '')
 data_suwon <- data_suwon[-1,]
@@ -48,4 +36,6 @@ i <- data_suwon[,c(1,2)]
 is.data.frame(i)
 
 ?data.frame
+
+is.character(data_suwon$일자)
 
