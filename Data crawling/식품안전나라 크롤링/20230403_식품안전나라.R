@@ -5,8 +5,9 @@
 library(RSelenium)
 library(rvest)
 library(httr)
-library(tidyverse)
 library(xml2)
+library(tidyverse)
+
 
 #연결
 remDr = remoteDriver(
@@ -27,24 +28,25 @@ Search_bar$setElementAttribute("value", "혼합음료")
 Search_btn$clickElement()
 
 #for 반복문
-for (page_num in 25:613) {
-    
-    id <- remDr$getPageSource()[[1]] %>% 
-        read_html() %>% 
-        html_nodes('tr') %>% 
-        html_nodes(".table_txt") %>% 
-        html_nodes("a") %>% 
-        html_attr("id")
-    
-    df_temp <- list()
-    
-    tryCatch({
+tryCatch({
+    for (page_num in 106:613) {
+        
+        id <- remDr$getPageSource()[[1]] %>% 
+            read_html() %>% 
+            html_nodes('tr') %>% 
+            html_nodes(".table_txt") %>% 
+            html_nodes("a") %>% 
+            html_attr("id")
+        
+        df_temp <- list()
+        
+        
         for (i in 1:length(id)) {
             id_xpath <- paste0("//*[@id=", id[i], "]")
             food_data <- remDr$findElement(using = "xpath", value = id_xpath)
-            Sys.sleep(3)
+            Sys.sleep(4)
             food_data$clickElement()
-            Sys.sleep(3)
+            Sys.sleep(4)
             
             raw_data <- remDr$getPageSource()[[1]] %>% read_html() %>% html_table(fill = TRUE)
             
@@ -57,7 +59,7 @@ for (page_num in 25:613) {
             click_close <- remDr$findElement(using = "xpath", value = '//*[@id="close"]')
             click_close$clickElement()
             
-            Sys.sleep(3)
+            Sys.sleep(4)
         }
         
         df_raw_data <- as.data.frame(raw_data[[1]])
@@ -68,9 +70,10 @@ for (page_num in 25:613) {
         
         click_next <- remDr$findElement(using = "xpath", value = '//*[@id="contents"]/main/section/div[2]/div[3]/div/ul/li[7]/a')
         click_next$clickElement()
-        Sys.sleep(40)
-    }, error = function(e) {
-        warning(paste0("Error: page_", page_num))
-    })
+        Sys.sleep(45)
+    }
+}, error = function(e) {
+    warning(paste0("Error: page_", page_num))
+})
 
-}
+
