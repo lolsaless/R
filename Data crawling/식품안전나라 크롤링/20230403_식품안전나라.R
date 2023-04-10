@@ -29,7 +29,7 @@ Search_btn$clickElement()
 
 #for 반복문
 tryCatch({
-    for (page_num in 106:613) {
+    for (page_num in 157:613) {
         
         id <- remDr$getPageSource()[[1]] %>% 
             read_html() %>% 
@@ -70,7 +70,7 @@ tryCatch({
         
         click_next <- remDr$findElement(using = "xpath", value = '//*[@id="contents"]/main/section/div[2]/div[3]/div/ul/li[7]/a')
         click_next$clickElement()
-        Sys.sleep(45)
+        Sys.sleep(50)
     }
 }, error = function(e) {
     warning(paste0("Error: page_", page_num))
