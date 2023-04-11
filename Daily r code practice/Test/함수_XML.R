@@ -3,8 +3,10 @@ library(tidyverse)
 
 xml_path <- "http://www.w3schools.com/xml/simple.xml"
 raw_xml <- read_xml(xml_path)
+raw_xml
 
 food_node <- xml_children(raw_xml)
+food_node
 
 lapply(seq_along(food_node),
        function(x){

@@ -1,0 +1,7 @@
+RankingNmbr ParameterName RelativeImportance RelativeImportance.Norm
+1           Phosphate     57.3359461409054 0.242818786411228
+2           DO            51.2560073213226 0.217070133689993
+3           Temperature   37.7144795937493 0.159721514712247
+4           Nitrates      36.0054889405895 0.152483907864902
+5           pH            35.390515364967 0.149879483461743
+6           SS            18.4240460473882 0.0780261738598866

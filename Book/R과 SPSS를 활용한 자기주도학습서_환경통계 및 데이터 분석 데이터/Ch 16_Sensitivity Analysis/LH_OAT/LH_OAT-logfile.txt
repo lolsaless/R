@@ -1,0 +1,25 @@
+================================================================================
+hydroPSO version     :  0.3-4  
+hydroPSO Built       :  R 3.4.3; ; 2018-02-28 15:08:12 UTC; windows  
+R version            :  R version 3.4.3 (2017-11-30)  
+Platform             :  x86_64-w64-mingw32  
+================================================================================
+Starting Time        :  Fri Mar 02 22:03:36 2018  
+================================================================================
+N (number of strata) : 10000 
+f (changing factor)  : 0.1 
+drty.in              : PSO.in 
+drty.out             : C:/Users/ESEL_computer/Desktop/R_version/Ch 16_Sensitivity Analysis/LH_OAT 
+param.ranges         : ParamRanges.txt 
+digits               : 7 
+gof.name             : GoF 
+do.plots             : FALSE 
+write2disk           : TRUE 
+verbose              : TRUE 
+normalise            : TRUE 
+parallel             : none 
+================================================================================
+Ending Time          : Fri Mar 02 22:03:45 2018 
+================================================================================
+Elapsed Time         : 8.96 secs 
+================================================================================

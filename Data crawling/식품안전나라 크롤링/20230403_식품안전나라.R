@@ -29,7 +29,7 @@ Search_btn$clickElement()
 
 #for 반복문
 tryCatch({
-    for (page_num in 186:613) {
+    for (page_num in 279:613) {
         
         id <- remDr$getPageSource()[[1]] %>% 
             read_html() %>% 
@@ -46,7 +46,7 @@ tryCatch({
             food_data <- remDr$findElement(using = "xpath", value = id_xpath)
             Sys.sleep(1)
             food_data$clickElement()
-            Sys.sleep(1)
+            Sys.sleep(3)
             
             raw_data <- remDr$getPageSource()[[1]] %>% read_html() %>% html_table(fill = TRUE)
             
@@ -59,21 +59,19 @@ tryCatch({
             click_close <- remDr$findElement(using = "xpath", value = '//*[@id="close"]')
             click_close$clickElement()
             
-            Sys.sleep(1)
+            Sys.sleep(3)
         }
         
         df_raw_data <- as.data.frame(raw_data[[1]])
         df_data <- do.call(bind_rows, df_temp)
         df_data <- bind_cols(df_raw_data, df_data)
         write.csv(df_data, paste0('drink_page_', page_num, '.csv'), fileEncoding = "UTF-8")
-        Sys.sleep(1)
+        Sys.sleep(3)
         
         click_next <- remDr$findElement(using = "xpath", value = '//*[@id="contents"]/main/section/div[2]/div[3]/div/ul/li[7]/a')
         click_next$clickElement()
-        Sys.sleep(15)
+        Sys.sleep(50)
     }
 }, error = function(e) {
     warning(paste0("Error: page_", page_num))
 })
-
-
