@@ -87,6 +87,7 @@ crawling_start <- function() {
         df_data <- bind_cols(df_raw_data, df_data)
         write.csv(df_data, paste0('drink_page_', page_num, '.csv'), fileEncoding = "UTF-8")
         Sys.sleep(3)
+        print(paste0(page_num, " page 크롤링 완료"))
         
         #Error확인, 정보 출력
         tryCatch(expr = {
