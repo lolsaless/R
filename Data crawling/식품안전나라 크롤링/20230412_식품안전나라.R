@@ -2,11 +2,12 @@
 
 #D:\R_coding\Rselenium\Windows java -Dwebdriver.gecko.driver="geckodriver" -jar selenium-server-standalone-4.0.0-alpha-2.jar -port 4445
 
-library(RSelenium)
-library(rvest)
-library(httr)
-library(xml2)
-library(tidyverse)
+if (!require(pacman)) {
+    install.packages("pacman")
+    library(pacman)
+}
+
+p_load(RSelenium, rvest, httr, xml2, tidyverse)
 
 crawling_start <- function() {
     
@@ -31,13 +32,13 @@ crawling_start <- function() {
     Sys.sleep(30)
     
     #폴더 파일개수 산정
-    scr_dir <- c("~/R_coding/Data crawling/식품안전나라 크롤링/data")
+    scr_dir <- c("D:/R_coding/Data crawling/식품안전나라 크롤링/data")
     scr_file <- list.files(scr_dir)
     scr_cnt <- length(scr_file)
     scr_cnt <- as.numeric(scr_cnt) + 1
     
     #크롤링데이터 저장
-    setwd("~/R_coding/Data crawling/식품안전나라 크롤링/data")
+    setwd("D:/R_coding/Data crawling/식품안전나라 크롤링/data")
     
     #크롤링 페이지 이동
     url2 <- paste0("https://www.foodsafetykorea.go.kr/portal/specialinfo/searchInfoProduct.do?menu_grp=MENU_NEW04&menu_no=2815#page", scr_cnt)
@@ -93,7 +94,7 @@ crawling_start <- function() {
         tryCatch(expr = {
             click_next <- remDr$findElement(using = "xpath", value = '//*[@id="contents"]/main/section/div[2]/div[3]/div/ul/li[7]/a')
             click_next$clickElement()
-            Sys.sleep(50)
+            Sys.sleep(60)
         }, error = function(e) {
             cat(paste0("Error: page_", page_num))
         })
