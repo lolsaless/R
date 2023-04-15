@@ -12,6 +12,9 @@ morse_dict <- list(
   "7" = "−−···", "8" = "−−−··", "9" = "−−−−·"
 )
 
+library(tidyverse)
+morse_dict
+
 # 입력된 텍스트를 모스 부호로 변환하는 함수
 to_morse <- function(text) {
   # 입력된 텍스트를 모두 대문자로 변환
@@ -29,3 +32,5 @@ to_morse <- function(text) {
   # 모스 부호로 변환된 문자를 결합하여 반환
   return(paste(morse_letters, collapse = " "))
 }
+
+to_morse("01020801453")
