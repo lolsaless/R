@@ -1,0 +1,14 @@
+f.apt <- function(year1, gu, mon1, num){
+  t.apt5 %>%   
+    filter(year==year1) %>% 
+    filter(구==gu) %>% 
+    filter(mon==mon1) %>% 
+    group_by(단지명) %>% 
+    summarise(n=n(), mean=mean(price)) %>% 
+    arrange(-mean) %>% 
+    head(num) %>% return
+}
+
+f.apt(2021, "강동구", "05", 6)
+f.apt(2020, "관악구", "06", 5)
+
