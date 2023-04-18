@@ -67,6 +67,46 @@ ts_waste2 <- cbind(input_waste, incinerated_waste)
 head(ts_waste2)
 dygraph(ts_waste2) %>% dyRangeSelector()
 
+#----ChatGPT수정코드----
+# Load necessary packages
+library(lubridate)
+library(xts)
+library(dygraphs)
+
+# Convert date column to date format
+ts_suwon <- data_suwon
+ts_suwon$Date <- ymd(ts_suwon$Date)
+
+# Rename variables and remove note column
+ts_suwon <- ts_suwon %>% 
+    select(Date, waste, Incinerated_waste, bottom_ash, fly_ash) %>% 
+    rename(waste_input = waste, waste_incinerated = Incinerated_waste)
+
+# Create xts object and plot dygraph
+ts_waste <- xts(ts_suwon$waste_input, order.by = ts_suwon$Date)
+ts_incinerated_waste <- xts(ts_suwon$waste_incinerated, order.by = ts_suwon$Date)
+
+ts_waste2 <- cbind(ts_waste, ts_incinerated_waste)
+dygraph(ts_waste2) %>% dyRangeSelector()
+
+
+#----ggplot으로 dygraph대체 코드----
+# Load necessary packages
+library(ggplot2)
+library(dplyr)
+
+# Create data frame with Date and Waste columns
+ts_waste_df <- data.frame(Date = ts_suwon$Date, Waste = ts_suwon$waste_input)
+
+# Create ggplot object and add layers
+ggplot(ts_waste_df, aes(x = Date, y = Waste)) +
+    geom_line() +
+    labs(x = "Date", y = "Waste") +
+    scale_x_date(date_breaks = "1 month", date_labels = "%b %Y") +
+    theme_classic()
+
+
+
 # # Create a vector of keywords to be removed in Korean
 # keywords <- c("날짜", "최대", "최소", "평균", "합계")
 # 
@@ -97,4 +137,4 @@ dygraph(ts_waste2) %>% dyRangeSelector()
 # ?data.frame
 # 
 # is.character(data_suwon$일자)
-# 
+

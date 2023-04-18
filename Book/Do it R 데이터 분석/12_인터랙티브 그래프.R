@@ -38,3 +38,5 @@ eco2 <- rename(eco2,
 colnames(eco2) <- c("psavert", "unemploy")
 head(eco2)
 dygraph(eco2) %>% dyRangeSelector()
+
+?dygraph
