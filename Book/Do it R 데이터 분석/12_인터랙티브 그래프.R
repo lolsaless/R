@@ -21,17 +21,14 @@ library(dygraphs)
 economic <- economics
 head(economic)
 library(xts)
-
 eco <- xts(economic$unemploy, order.by = economic$date)
 head(eco)
-
 dygraph(eco) %>% dyRangeSelector()
-
 eco_a <- xts(economic$psavert, order.by = economic$date)
 eco_b <- xts(economic$unemploy, order.by = economic$date)
-
 rownames_to_column(as.data.frame(eco_a), var = "date") %>% head(5)
 eco_a %>% head
+eco_b %>% head
 
 eco2 <- cbind(eco_a, eco_b)
 head(eco2)
@@ -40,5 +37,4 @@ eco2 <- rename(eco2,
 
 colnames(eco2) <- c("psavert", "unemploy")
 head(eco2)
-
 dygraph(eco2) %>% dyRangeSelector()

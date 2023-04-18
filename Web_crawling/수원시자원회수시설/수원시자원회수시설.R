@@ -13,7 +13,7 @@ data <- POST(url, body = list(
 ))
 
 data_suwon <- read_html(data) %>% html_table(fill = T) %>% .[[1]]
-
+read_h
 
 # Create a vector of keywords to be removed in Korean
 keywords <- c("일자", "최대", "최소", "평균", "합계")
@@ -55,8 +55,17 @@ str(ts_suwon)
 names(ts_suwon) <- c("Date", "waste", "Incinerated_waste", "bottom_ash", "fly_ash", "note")
 ts_suwon$note <- NULL
 
+# 인터랙티브그래프 만들기기
+waste <- ts_suwon
 
+ts_waste <- xts(waste$waste, order.by = waste$Date)
 
+input_waste <- xts(waste$waste, order.by = waste$Date)
+incinerated_waste <- xts(waste$Incinerated_waste, order.by = waste$Date)
+
+ts_waste2 <- cbind(input_waste, incinerated_waste)
+head(ts_waste2)
+dygraph(ts_waste2) %>% dyRangeSelector()
 
 # # Create a vector of keywords to be removed in Korean
 # keywords <- c("날짜", "최대", "최소", "평균", "합계")
