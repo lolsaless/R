@@ -1,23 +1,24 @@
-library(httr)
-library(rvest)
-library(tidyverse)
-library(lubridate)
-library(xts)
-library(dygraphs)
+if (!require(pacman)){
+    install.packages("pacman")
+    library(pacman)
+}
 
+# library 불러오기
+p_load(httr, rvest, tidyverse, lubridate, xts, shiny, plotly)
+
+# 수원시자원화회수시설 자료 크롤링 시작
 url <- 'http://www.rrfsuwon.co.kr/_Skin/24_1.php'
 
 data <- POST(url, body = list(
     gubun = 'period',
     sYear = '2020',
     sMonth = '10',
-    sDate = '2010-01-01',
-    eDate = '2023-04-17'
+    sDate = '2021-01-01',
+    eDate = '2022-12-31'
 ))
 
 data_selection <- read_html(data) %>% html_table(fill = TRUE) %>% .[[1]]
 
-# Create a vector of keywords to be removed in Korean
 # keywords <- c("language", "language", "language", "lash", "lash")
 keywords <- c("일자", "최대", "최소", "평균", "합계")
 
@@ -26,124 +27,139 @@ data_type <- subset(data_selection, !apply(data_selection, 1,
                                            function(x) any(grepl(paste(keywords, collapse = "|"),
                                                                  gsub("[^[:alpha:]]", " ", x)))))
 
+# ts_suwon에 data_type할당
 ts_suwon <- data_type
 ts_suwon$일자 <- ymd(ts_suwon$일자)
 
-# 변수명 변경
+# 변수명 변경, 삭제
 names(ts_suwon) <- c("Date", "waste", "Incinerated_waste", "bottom_ash", "fly_ash", "note")
 ts_suwon$note <- NULL
 
-# 인터랙티브그래프 만들기
-waste <- ts_suwon
-ts_waste <- xts(waste$waste, order.by = waste$Date)
-
-input_waste <- xts(waste$waste, order.by = waste$Date)
-incinerated_waste <- xts(waste$Incinerated_waste, order.by = waste$Date)
-
-ts_waste2 <- cbind(input_waste, incinerated_waste)
-head(ts_waste2)
-dygraph(ts_waste2) %>% dyRangeSelector()
+# waste ~ fly_ash까지 숫자로 변경
+ts_suwon <- ts_suwon %>% 
+    mutate_at(vars(waste:fly_ash), ~ as.numeric(.))
 
 
-
-#----실행오류----
-# library(ggplot2)
-# 
-# # Convert the xts object to a data frame with a Date column
-# ts_waste2_df <- data.frame(Date = index(ts_waste2), coredata(ts_waste2))
-# 
-# # Create the ggplot chart
-# ggplot(ts_waste2_df, aes(x = Date)) +
-#     geom_line(aes(y = input_waste, color = "Input Waste")) +
-#     geom_line(aes(y = incinerated_waste, color = "Incinerated Waste")) +
-#     labs(title = "Time Series Plot of Waste Data",
-#          x = "Date",
-#          y = "Waste",
-#          color = "Waste Type") +
-#     theme_minimal()
-
-
-#----실행오류----
-# library(plotly)
-# library(shiny)
-# # Inside your Shiny app's server function, create the plotly object
-# output$plot <- renderPlotly({
-#     waste_plot <- ggplot(ts_waste2_df, aes(x = Date)) +
-#         geom_line(aes(y = input_waste, color = "Input Waste")) +
-#         geom_line(aes(y = incinerated_waste, color = "Incinerated Waste")) +
-#         labs(title = "Time Series Plot of Waste Data",
-#              x = "Date",
-#              y = "Waste",
-#              color = "Waste Type") +
-#         theme_minimal()
-#     
-#     ggplotly(waste_plot)
-# })
-
-
-#----ts_waste2_df오류----
-# library(shiny)
-# library(ggplot2)
-# library(plotly)
-# 
-# # Define UI for the app
-# ui <- fluidPage(
-#     titlePanel("Time Series Plot of Waste Data"),
-#     mainPanel(
-#         plotlyOutput("waste_plot")
-#     )
-# )
-# 
-# # Define server logic for the app
-# server <- function(input, output) {
-#     output$waste_plot <- renderPlotly({
-#         waste_plot <- ggplot(ts_waste2_df, aes(x = Date)) +
-#             geom_line(aes(y = input_waste, color = "Input Waste")) +
-#             geom_line(aes(y = incinerated_waste, color = "Incinerated Waste")) +
-#             labs(title = "Time Series Plot of Waste Data",
-#                  x = "Date",
-#                  y = "Waste",
-#                  color = "Waste Type") +
-#             theme_minimal()
-#         
-#         ggplotly(waste_plot)
-#     })
-# }
-# 
-# # Run the app
-# shinyApp(ui = ui, server = server)
-
-
-library(shiny)
-library(ggplot2)
-library(plotly)
-
-# Convert the xts object to a data frame with a Date column
-ts_waste2_df <- data.frame(Date = index(ts_waste2), coredata(ts_waste2))
-
-# Define UI for the app
+# Shiny를 이용하여
+# Define UI(정상작동)
 ui <- fluidPage(
-    titlePanel("Time Series Plot of Waste Data"),
-    mainPanel(
-        plotlyOutput("waste_plot")
+    titlePanel("Waste Time Series Data"),
+    sidebarLayout(
+        sidebarPanel(
+            dateRangeInput("date_range", label = "Date Range", start = min(ts_suwon$Date), end = max(ts_suwon$Date)),
+            selectInput("type", label = "Waste Type", choices = c("waste", "Incinerated_waste", "bottom_ash", "fly_ash"), selected = "waste")
+        ),
+        mainPanel(
+            plotOutput("waste_plot")
+        )
     )
 )
 
-# Define server logic for the app
+# Define server(정상작동)
 server <- function(input, output) {
-    output$waste_plot <- renderPlotly({
-        waste_plot <- ggplot(ts_waste2_df, aes(x = Date)) +
-            geom_line(aes(y = input_waste, color = "Input Waste")) +
-            geom_line(aes(y = incinerated_waste, color = "Incinerated Waste")) +
-            labs(title = "Time Series Plot of Waste Data",
-                 x = "Date",
-                 y = "Waste",
-                 color = "Waste Type") +
-            theme_minimal()
-        
-        ggplotly(waste_plot)
+    output$waste_plot <- renderPlot({
+        # Filter data based on user input
+        filtered_data <- ts_suwon %>%
+            filter(Date >= input$date_range[1] & Date <= input$date_range[2])
+        ggplot(filtered_data, aes(x = Date, y = !!sym(input$type))) +
+            geom_line() +
+            xlab("Date") +
+            ylab("Waste") +
+            ggtitle(paste("Waste Type:", input$type))
     })
 }
 
-# Run the app
-shinyApp(ui = ui, server = server)
+# # Run app
+shinyApp(ui, server)
+
+# Define UI(여러 변수 선택 가능)
+ui <- fluidPage(
+    titlePanel("Waste Time Series Data"),
+    sidebarLayout(
+        sidebarPanel(
+            dateRangeInput("date_range", label = "Date Range", start = min(ts_suwon$Date), end = max(ts_suwon$Date)),
+            checkboxGroupInput("type", label = "Waste Type", choices = c("waste", "Incinerated_waste", "bottom_ash", "fly_ash"), selected = "waste")
+        ),
+        mainPanel(
+            plotOutput("waste_plot")
+        )
+    )
+)
+
+# Define server(여러 변수 선택 가능)
+server <- function(input, output) {
+    output$waste_plot <- renderPlot({
+        # Filter data based on user input
+        filtered_data <- ts_suwon %>%
+            filter(Date >= input$date_range[1] & Date <= input$date_range[2])
+        
+        # Create the initial ggplot object
+        p <- ggplot(filtered_data, aes(x = Date)) +
+            xlab("Date") +
+            ylab("Waste") +
+            ggtitle("Waste Types")
+        
+        # Add lines for selected waste types
+        for (waste_type in input$type) {
+            p <- p + geom_line(aes_string(y = waste_type), color = switch(waste_type,
+                                                                          "waste" = "gray57",
+                                                                          "Incinerated_waste" = "deeppink4",
+                                                                          "bottom_ash" = "dodgerblue4",
+                                                                          "fly_ash" = "sienna4"
+            ))
+        }
+        
+        return(p)
+    })
+}
+
+# Run app
+shinyApp(ui, server)
+
+#####################################################
+####################완성코드#########################
+
+# Define UI(여러변수 선택 및 확대 가능)
+ui <- fluidPage(
+    titlePanel("Waste Time Series Data"),
+    sidebarLayout(
+        sidebarPanel(
+            dateRangeInput("date_range", label = "Date Range", start = min(ts_suwon$Date), end = max(ts_suwon$Date)),
+            checkboxGroupInput("type", label = "Waste Type", choices = c("waste", "Incinerated_waste", "bottom_ash", "fly_ash"), selected = "waste")
+        ),
+        mainPanel(
+            plotlyOutput("waste_plot")
+        )
+    )
+)
+
+# Define server(여러변수 선택 및 확대 가능)
+server <- function(input, output) {
+    output$waste_plot <- renderPlotly({
+        # Filter data based on user input
+        filtered_data <- ts_suwon %>%
+            filter(Date >= input$date_range[1] & Date <= input$date_range[2])
+        
+        # Create the initial ggplot object
+        p <- ggplot(filtered_data, aes(x = Date)) +
+            xlab("Date") +
+            ylab("Waste") +
+            ggtitle("Waste Types")
+        
+        # Add lines for selected waste types
+        for (waste_type in input$type) {
+            p <- p + geom_line(aes_string(y = waste_type), color = switch(waste_type,
+                                                                          "waste" = "gray57",
+                                                                          "Incinerated_waste" = "deeppink4",
+                                                                          "bottom_ash" = "dodgerblue4",
+                                                                          "fly_ash" = "sienna4"
+            ))
+        }
+        
+        # Convert ggplot to plotly for interactivity
+        ggplotly(p)
+    })
+}
+
+# Run app
+shinyApp(ui, server)
