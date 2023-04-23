@@ -3,7 +3,7 @@ library(writexl)
 library(readxl)
 
 오호# 식품안전나라 제품리스트
-data <- read_excel("혼합음료 리스트.xlsx")
+data <- read_excel("혼합음료(raw data).xlsx")
 
 patterns_to_remove <- c("알로에", "망고", "꿀", "헛개",
                         "산수유", "프로틴", "홍삼", "식혜",
