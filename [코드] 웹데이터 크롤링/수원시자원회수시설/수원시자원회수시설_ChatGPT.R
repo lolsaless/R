@@ -40,7 +40,8 @@ ts_suwon <- ts_suwon %>%
     mutate_at(vars(waste:fly_ash), ~ as.numeric(.))
 
 
-# Shiny를 이용하여
+
+#####Shiny를 이용하여 출력하기####
 # Define UI(정상작동)
 ui <- fluidPage(
     titlePanel("Waste Time Series Data"),
@@ -72,6 +73,9 @@ server <- function(input, output) {
 # # Run app
 shinyApp(ui, server)
 
+
+
+####여러 변수 선택하여 출력하기####
 # Define UI(여러 변수 선택 가능)
 ui <- fluidPage(
     titlePanel("Waste Time Series Data"),
@@ -116,9 +120,10 @@ server <- function(input, output) {
 # Run app
 shinyApp(ui, server)
 
+
+
 #####################################################
 ####################완성코드#########################
-
 # Define UI(여러변수 선택 및 확대 가능)
 ui <- fluidPage(
     titlePanel("Waste Time Series Data"),
