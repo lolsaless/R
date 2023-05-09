@@ -16,7 +16,7 @@ config <- list(
 )
 
 # Load location codes from file
-locCd <- read_excel(file.path(config$wd, "locCd.xlsx"))
+locCd <- read_excel("locCd.xlsx")
 
 # Define function to retrieve data for a single location
 get_location_data <- function(locCd, year, config) {
