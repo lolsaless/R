@@ -3,6 +3,9 @@ if (!require(pacman)) {
     library (pacman)
 }
 
+
+#### 검토하지 않음 ####
+
 # Load required packages
 pacman::p_load(rvest, httr, jsonlite, readxl, purrr, tidyjson)
 

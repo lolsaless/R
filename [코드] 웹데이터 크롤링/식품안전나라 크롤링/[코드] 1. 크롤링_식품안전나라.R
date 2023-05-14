@@ -1,4 +1,4 @@
-#C:\Users\HooF\Documents\GitHub\R_coding\Rselenium\Windows java -Dwebdriver.gecko.driver="geckodriver" -jar selenium-server-standalone-4.0.0-alpha-2.jar -port 4445
+#C:\GitHub\R_coding\Rselenium\Win2 java -Dwebdriver.gecko.driver="geckodriver" -jar selenium-server-standalone-4.0.0-alpha-2.jar -port 4445
 
 #D:\R_coding\Rselenium\Windows java -Dwebdriver.gecko.driver="geckodriver" -jar selenium-server-standalone-4.0.0-alpha-2.jar -port 4445
 
@@ -32,13 +32,13 @@ crawling_start <- function() {
     Sys.sleep(30)
     
     #폴더 파일개수 산정
-    scr_dir <- c("D:/R_coding/Data crawling/식품안전나라 크롤링/data")
+    scr_dir <- c("C:/Github/R_coding/[코드] 웹데이터 크롤링/식품안전나라 크롤링/data_2")
     scr_file <- list.files(scr_dir)
     scr_cnt <- length(scr_file)
     scr_cnt <- as.numeric(scr_cnt) + 1
     
     #크롤링데이터 저장
-    setwd("D:/R_coding/Data crawling/식품안전나라 크롤링/data")
+    setwd("C:/Github/R_coding/[코드] 웹데이터 크롤링/식품안전나라 크롤링/data_2")
     
     #크롤링 페이지 이동
     url2 <- paste0("https://www.foodsafetykorea.go.kr/portal/specialinfo/searchInfoProduct.do?menu_grp=MENU_NEW04&menu_no=2815#page", scr_cnt)
