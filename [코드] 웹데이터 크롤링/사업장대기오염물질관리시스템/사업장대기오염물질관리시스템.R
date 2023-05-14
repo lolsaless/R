@@ -1,7 +1,5 @@
 #작업공간 우선 지정
-setwd('D:\\')
-ifelse(dir.exists('r_data'), FALSE, dir.create('r_data'))
-setwd('D:\\r_data')
+setwd('C:/Github/R_coding/[코드] 웹데이터 크롤링/사업장대기오염물질관리시스템')
 
 #데이터 크롤링을 위한 필수 라이브러리 설치
 ifelse(!require(rvest), install.packages('rvest'), library(rvest))
@@ -28,7 +26,7 @@ df.code = data.frame(num = c(1:17),
 # 1cycle = 2015 1, 2015 2..... 2015 17
 # 2cycle = 2016 1, 2016 2..... 2016 17
 # 최종 2019 17까지 반복을 하게 된다.
-ifelse(dir.exists('data_tms'), FALSE, dir.create('data_tms'))
+ifelse(dir.exists('data'), FALSE, dir.create('data'))
 for (i in year) {
     for (ii in code) {
         data_tms <- POST(url_tms,
@@ -40,7 +38,7 @@ for (i in year) {
         
         for (iii in df.code$num) {
             if (ii == iii){
-                write.csv(data_tms, paste0('data_tms/', i, '_', df.code$city[[iii]],'.csv'))
+                write.csv(data_tms, paste0('data/', i, '_', df.code$city[[iii]],'.csv'))
             }
         }
     }
