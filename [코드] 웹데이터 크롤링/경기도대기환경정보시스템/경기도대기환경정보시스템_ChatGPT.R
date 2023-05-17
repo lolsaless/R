@@ -1,71 +1,41 @@
+# 패키지 로드
 if (!require(pacman)) {
     install.packages("pacman")
-    library (pacman)
+    library(pacman)
 }
 
+pacman::p_load(rvest, httr, jsonlite, readxl)
 
-#### 검토하지 않음 ####
+# 크롤링 url
+url_air <- 'https://air.gg.go.kr/default/tms.do'
+ref_air <- 'https://air.gg.go.kr/default/esData.do?mCode=A010010000'
 
-# Load required packages
-pacman::p_load(rvest, httr, jsonlite, readxl, purrr, tidyjson)
+# body에 들어갈 부분이며, 각 측정 지점의 고유 번호가 저장된 csv파일을 불러온다.
+# 워킹 디렉토리 변경 대신에 파일의 절대 경로를 사용합니다.
+locCd_path <- "C:/Github/R_coding/[코드] 웹데이터 크롤링/경기도대기환경정보시스템/locCd.xlsx"
+locCd <- readxl::read_excel(locCd_path)
 
-# Set configuration options
-config <- list(
-    url_air = 'https://air.gg.go.kr/default/tms.do',
-    ref_air = 'https://air.gg.go.kr/default/esData.do?mCode=A010010000',
-    wd = 'D:/R_coding/Web_crawling/Gyeonggi-do Atmospheric Environment Information System',
-    user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
-    sleep_time = 10.0
-)
-
-# Load location codes from file
-locCd <- read_excel("locCd.xlsx")
-
-# Define function to retrieve data for a single location
-get_location_data <- function(locCd, year, config) {
-    data_air <- POST(config$url_air,
-                     body = list(op = 'getByLoc',
-                                 fromDt = paste0(year, "-01-01"),
-                                 toDt = paste0(year, "-12-31"),
-                                 locCd = as.numeric(locCd),
-                                 typeCd = '3'),
-                     user_agent(config$user_agent),
-                     add_headers(referer = config$ref_air))
-    content <- content(data_air, as='text')
-    jsonlite::fromJSON(content, flatten = TRUE)
-}
-
-# Define function to process JSON data using purrr
-process_data_purrr <- function(data) {
-    data %>%
-        map_df(~tibble::as_tibble(.))
-}
-
-# Define function to process JSON data using tidyjson
-process_data_tidyjson <- function(data) {
-    data %>%
-        as.tbl_json() %>%
-        gather_array() %>%
-        spread_all() %>%
-        as_tibble()
-}
-
-# Process data for each year and location code
-results <- list()
+# 시간단위 측정결과 연간 자료 다운로드 가능
 for (year in 2020:2021) {
     from_year <- paste0(year,"-01-01")
     to_year <- paste0(year, "-12-31")
     count = 0
-    result_year <- list()
-    for (i in 1: nrow(locCd)) {
+    
+    for (i in 1:nrow(locCd)) {
         count = count + 1
-        location_name <- paste0(locCd$region[count], '_', locCd$branch[count])
-        location_data <- get_location_data(locCd[i,1], year, config)
-        write.csv(location_data, file.path(config$wd, paste0(year, '_', location_name, '.csv')), row.names = FALSE)
-        message(paste0(year, '_', location_name, '.csv file crawled'))
-        Sys.sleep(config$sleep_time)
-        result_year[[count]] <- location_data
+        data_air <- httr::POST(url_air,
+                               body = list(op = 'getByLoc',
+                                           fromDt = from_year,
+                                           toDt = to_year,
+                                           locCd = as.numeric(locCd[i,1]),
+                                           typeCd = '3'),
+                               httr::user_agent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'),
+                               httr::add_headers(referer = ref_air))
+        
+        air_gg <- data_air %>% httr::content(as='text') %>% jsonlite::fromJSON() %>% do.call(rbind,.)
+        file_name <- paste0(year, '_', locCd$지역[count], '_', locCd$지점[count], '.csv')
+        write.csv(air_gg, file_name, row.names = FALSE)
+        message(paste0(file_name, " 파일 크롤링 완료"))
+        Sys.sleep(10.0)
     }
-    year_results <- purrr::map_df(result_year, ~process_data_purrr(.)) # or process_data_tidyjson() for tidyjson approach
-    results[[year]] <- year_results
 }
