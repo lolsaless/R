@@ -73,7 +73,7 @@ server <- function(input, output) {
 # # Run app
 shinyApp(ui, server)
 
-
+shiny::shiny
 
 ####여러 변수 선택하여 출력하기####
 # Define UI(여러 변수 선택 가능)
