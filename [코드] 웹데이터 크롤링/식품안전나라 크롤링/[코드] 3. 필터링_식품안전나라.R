@@ -38,4 +38,3 @@ data <- data %>%
     filter(!rowSums(across(everything(), ~grepl(paste(patterns_to_remove, 
                                               collapse = "|"), .))))
 write_xlsx(data, "test.xlsx")
-
