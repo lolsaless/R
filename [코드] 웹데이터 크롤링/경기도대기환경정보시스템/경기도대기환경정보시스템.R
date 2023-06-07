@@ -12,7 +12,7 @@ ref_air <- 'https://air.gg.go.kr/default/esData.do?mCode=A010010000'
 
 # body에 들어갈 부분이며, 각 측정 지점의 고유 번호가 저장된 csv파일을 불러온다.
 setwd("C:/Github/R_coding/[코드] 웹데이터 크롤링/경기도대기환경정보시스템")
-# setwd("D:/R_coding/[코드] 웹데이터 크롤링/경기도대기환경정보시스템")
+setwd("D:/R_coding/[코드] 웹데이터 크롤링/경기도대기환경정보시스템")
 locCd <- read_excel("locCd.xlsx")
 # typeCd는 데이터의 타입으로 1 = 시간, 2 = 일, 3 = 월, 4 = 년 단위로 데이터 호출
 
@@ -42,7 +42,7 @@ for (year in 2020:2021) {
                                      fromDt = from_year,
                                      toDt = to_year,
                                      locCd = as.numeric(locCd[i,1]),
-                                     typeCd = '3'),
+                                     typeCd = '2'),
                          user_agent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'),
                          add_headers(referer = ref_air))
         
