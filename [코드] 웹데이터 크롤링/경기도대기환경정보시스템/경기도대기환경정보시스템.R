@@ -21,15 +21,15 @@ locCd <- read_excel("locCd.xlsx")
 
 # ----예시자료----
 # user_agent 없으면 보안 정책에 의해서 차단
-# data_air <- POST(url_air,
-#                  body = list(op = 'getByLoc',
-#                              fromDt = '2023-04-20',
-#                              toDt = '2023-04-20',
-#                              locCd = 131611,
-#                              typeCd = '1'),
-#                  add_headers(referer = ref_air))
-# air_gg <- data_air %>% content(as='text') %>% fromJSON() %>% do.call(rbind,.)
-# write.csv(air_gg, paste0(locCd$지역[count], '_', locCd$지점[count], '.csv'))
+data_air <- POST(url_air,
+                 body = list(op = 'getByLoc',
+                             fromDt = '2023-04-20',
+                             toDt = '2023-04-20',
+                             locCd = 131611,
+                             typeCd = '1'),
+                 add_headers(referer = ref_air))
+air_gg <- data_air %>% content(as='text') %>% fromJSON() %>% do.call(rbind,.)
+write.csv(air_gg, paste0(locCd$지역[count], '_', locCd$지점[count], '.csv'))
 
 
 # 시간단위 측정결과 연간 자료 다운로드 가능

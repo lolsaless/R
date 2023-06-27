@@ -6,6 +6,8 @@ if (!require(pacman)) {
 
 pacman::p_load(rvest, httr, jsonlite, readxl)
 
+setwd("D:/R_coding/[코드] 웹데이터 크롤링/경기도대기환경정보시스템")
+
 # 크롤링 url
 url_air <- 'https://air.gg.go.kr/default/tms.do'
 ref_air <- 'https://air.gg.go.kr/default/esData.do?mCode=A010010000'
@@ -13,6 +15,8 @@ ref_air <- 'https://air.gg.go.kr/default/esData.do?mCode=A010010000'
 # body에 들어갈 부분이며, 각 측정 지점의 고유 번호가 저장된 csv파일을 불러온다.
 # 워킹 디렉토리 변경 대신에 파일의 절대 경로를 사용합니다.
 locCd_path <- "C:/Github/R_coding/[코드] 웹데이터 크롤링/경기도대기환경정보시스템/locCd.xlsx"
+locCd_path <- "D:/R_coding/[코드] 웹데이터 크롤링/경기도대기환경정보시스템/locCd.xlsx"
+
 locCd <- readxl::read_excel(locCd_path)
 
 # 시간단위 측정결과 연간 자료 다운로드 가능

@@ -1,5 +1,8 @@
+setwd("D:/R_coding/[코드] 웹데이터 크롤링/사업장대기오염물질관리시스템")
+
 # Create the 'data_tms' directory if it doesn't exist
 dir.create('data_tms', showWarnings = FALSE)
+
 
 # http referrer to leave the address of the site to be crawled and traces (?) necessary for crawling
 url_tms <- 'https://www.stacknsky.or.kr/stacknsky/selectMeasureResult.do2'
