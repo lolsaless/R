@@ -31,8 +31,10 @@ add_comment <- function(title) {
 add_comment("데이터 불러오기")
 add_comment("데이터 구조파악")
 
+file.choose()
 # (추가) 로컬파일에서 데이터 로드하기: 로컬컴퓨터에 데이터 파일이 있는지 사전확인
 incheon0427_local <- read_excel(file.choose())
+
 
 #----------------
 # 데이터 구조파악
