@@ -6,7 +6,15 @@ if (!require(pacman)) {
 
 pacman::p_load(rvest, httr, jsonlite, readxl)
 
-setwd("D:/R_coding/[코드] 웹데이터 크롤링/경기도대기환경정보시스템")
+folder_path <- "C:/data/tms"  # 폴더 경로를 지정합니다.
+
+if (!file.exists(folder_path)) {
+    dir.create(folder_path)
+} else {
+    cat("폴더가 이미 존재합니다.\n")
+}
+
+setwd("C:/data/tms")
 
 # 크롤링 url
 url_air <- 'https://air.gg.go.kr/default/tms.do'
