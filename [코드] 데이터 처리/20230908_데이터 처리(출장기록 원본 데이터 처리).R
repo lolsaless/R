@@ -1,7 +1,7 @@
 library(tidyverse)
 library(writexl)
 
-raw_data <- readxl::read_xls("raw_data.xls")
+raw_data <- readxl::read_xls("출장기록.xls")
 
 # 1번 열에서 숫자가 아닌 데이터를 갖는 행을 필터링하여 삭제
 data_1 <- raw_data[!is.na(as.numeric(as.character(raw_data[[1]]))), ]
