@@ -1,16 +1,7 @@
-<<<<<<< HEAD
-C:/Git/R_coding/[사업] 2023_혼합음료/2. 양이온 제품 정보 상자그림/1. 양이온 제품 표시 기준 상자그림.R="A0F177F3"
-C:/Git/Study/2. 연구사업(2023년)/6. 분석결과/data_analysis/양이온 표시기준 실제값 차이(Log변환)/Ca/Ca_대수정규분포.R="8E8F4533"
-=======
-D:/github/R_coding/[사업] 2023_혼합음료/4. 양이온 표시기준 실제값 차이(Log변환)/Ca/Ca_log_data.R="62598E90"
-D:/github/R_coding/[사업] 2023_혼합음료/4. 양이온 표시기준 실제값 차이(Log변환)/Ca/Ca_log_data_1.R="7B5EEB88"
-D:/github/R_coding/[사업] 2023_혼합음료/4. 양이온 표시기준 실제값 차이(Log변환)/K/K_log_data.R="6E163536"
-D:/github/R_coding/[사업] 2023_혼합음료/4. 양이온 표시기준 실제값 차이(Log변환)/Mg/Mg_log_data.R="3C7DBA3B"
-D:/github/R_coding/[사업] 2023_혼합음료/4. 양이온 표시기준 실제값 차이(Log변환)/Na/Na_log_data.R="879A2611"
-D:/github/R_coding/북부지원 연구사업/o,n_phenol.R="70E1AB94"
-D:/github/R_coding/북부지원 연구사업/o,n_phenol_bar.R="8A52A9EE"
-D:/github/R_coding/북부지원 연구사업/o,n_phenol_bar_regression line.R="9148958C"
-D:/github/Study/2. 연구사업(2023년)/6. 분석결과/data_analysis/Log chart_양이온 표시기준 실제값 차이(Log변환)/Ca/Ca_log_data_2.R="E14FBA5D"
+D:/github/R_coding/[사업] 2023_연구사업/5. 정규성검증/정규성검증.R="71C04E5B"
+D:/github/Study/2. 연구사업(2023년)/6. 분석결과/data_analysis/Log chart_양이온 표시기준 실제값 차이(Log변환)/Ca/Ca_log_data_1.R="0900C8D2"
+D:/github/Study/2. 연구사업(2023년)/6. 분석결과/data_analysis/Log chart_양이온 표시기준 실제값 차이(Log변환)/K/K_log_data.R="6C86F93D"
+D:/github/Study/2. 연구사업(2023년)/6. 분석결과/data_analysis/Log chart_양이온 표시기준 실제값 차이(Log변환)/Mg/Mg_log_data.R="9320EDAC"
+D:/github/Study/2. 연구사업(2023년)/6. 분석결과/data_analysis/Log chart_양이온 표시기준 실제값 차이(Log변환)/Na/Na_log_data.R="EC74C1C1"
 D:/github/Study/2. 연구사업(2023년)/6. 분석결과/data_analysis/barplot_혼합음료 제조사 정보/bar, line plot.R="F3BC1405"
 D:/github/Study/2. 연구사업(2023년)/6. 분석결과/data_analysis/barplot_혼합음료 제조사 정보/제조사, 제품수 barplot.R="C4464A58"
->>>>>>> c3889d67ab4bdb4ad5f42aee76e6be8e4b0d89c7

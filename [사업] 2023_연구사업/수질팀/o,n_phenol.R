@@ -5,16 +5,15 @@ library(car)
 library(tidyverse)
 library(ggrepel)
 
-df <- o_n_phenol
-
+setwd("D:/")
 ## Reading Data
-df <- read_excel("o,n_phenol.xlsx")
+df <- read_excel("phenol_data.xlsx")
 
 ## Data Transformation for NP
-df$Log_NP <- log(df$NP + 1)
+df$Log_NP <- log10(df$NP + 1)
 
 ## Data Transformation for OP
-df$Log_OP <- log(df$OP + 1)
+df$Log_OP <- log10(df$OP + 1)
 
 ## Adding row numbers
 df <- df %>% mutate(row_num = row_number())
